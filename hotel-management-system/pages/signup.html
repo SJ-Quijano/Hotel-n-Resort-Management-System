@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <title> LUNARA | Guest registration</title>
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+  <link rel="stylesheet" href="../assets/css/Auth.css" />
+</head>
+<body class="auth-page">
+  <a class="back-link" id="authBack" href="index.html" aria-label="Go back to home"><span aria-hidden="true">←</span> Back</a>
+  <main class="auth-wrap">
+    <form class="auth-card" id="signupForm">
+      <a class="brand brand-auth" href="index.html"><span class="brand-mark">L</span><span>LUNARA</span></a>
+      <p class="eyebrow">YOUR NEXT STAY STARTS HERE</p>
+      <h1>Create a guest account</h1>
+      <p class="sub">Register to book rooms and manage your reservations.</p>
+      <label for="fullName">Full name</label>
+      <input type="text" id="fullName" required maxlength="120" autocomplete="name" />
+      <label for="phone">Phone number <span class="optional">Optional</span></label>
+      <input type="tel" id="phone" maxlength="32" autocomplete="tel" />
+      <label for="email">Email address</label>
+      <input type="email" id="email" required maxlength="254" autocomplete="email" />
+      <label for="password">Password <span class="optional">12+ chars, uppercase and number</span></label>
+      <input type="password" id="password" required minlength="12" maxlength="128" autocomplete="new-password" />
+      <label for="confirm">Confirm password</label>
+      <input type="password" id="confirm" required minlength="12" maxlength="128" autocomplete="new-password" />
+      <button class="button button-primary button-wide" type="submit" id="signupBtn">Create account</button>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      <p class="switch">Already registered? <a id="loginLink" href="index.html">Sign in</a></p>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>initSignup();</script>
+</body>
+</html>

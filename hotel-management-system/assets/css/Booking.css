@@ -1,0 +1,180 @@
+
+/* Booking page: light background, full screen height */
+.booking-page { min-height: 100vh; background: #f6f5f0; }
+/* Dark navy top bar with logo and 'Back to the resort' link */
+.booking-header { display: flex; min-height: 82px; align-items: center; justify-content: space-between; gap: 20px; padding: 14px clamp(22px,7vw,105px); background: var(--header-bg); }
+/* Logo in the booking header (white) */
+.brand-booking { color: #fff; font-size: .79rem; letter-spacing: .14em; }
+/* Gold 'H' square in the booking header */
+.brand-booking .brand-mark { width: 43px; height: 43px; border-color: rgba(255,255,255,.9); color: var(--gold-soft); }
+/* 'HOTEL & RESORT' under the logo name */
+.brand-booking small { color: rgba(255,255,255,.72); font-size: .54rem; }
+/* 'Back to the resort' link */
+.booking-home-link { color: rgba(255,255,255,.82); text-decoration: none; font-size: .8rem; }
+/* Link turns gold on hover */
+.booking-home-link:hover { color: var(--gold-soft); }
+/* 'Create account' link turns gold on hover */
+.booking-create-account:hover { color: var(--gold-dark); }
+/* Centered column holding the whole booking form (max 930px) */
+.booking-main { width: min(100% - 36px, 930px); margin: 0 auto; padding: 54px 0 90px; }
+/* Title area at the top ('Book your stay.') */
+.booking-intro { margin-bottom: 35px; text-align: center; }
+/* Darker gold small label */
+.booking-intro .eyebrow { color: var(--gold-dark); }
+/* Big title */
+.booking-intro h1 { margin: 0; color: var(--navy); font: 500 clamp(2.6rem,6vw,4.2rem)/1.1 var(--serif); }
+/* Gold highlighted word 'stay.' */
+.booking-intro h1 em { color: var(--gold-dark); font-weight: 500; }
+/* Grey sentence under the title */
+.booking-intro > p:last-child { margin: 12px 0 0; color: var(--muted); font-size: .9rem; }
+
+/* card used by login prompt and each step */
+/* White rounded card used for each booking step */
+.panel { padding: clamp(18px,3vw,28px); border: 1px solid rgba(24,49,60,.06); border-radius: 10px; background: var(--white); box-shadow: var(--shadow); }
+/* Card shown when guest is not logged in */
+.booking-login { text-align: center; }
+/* Navy heading inside a step card */
+.booking-login h2, .booking-step h2 { margin: 0; color: var(--navy); font: 600 clamp(1.5rem,3vw,2rem) var(--serif); }
+/* Grey text in the login card */
+.booking-login p { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+/* Centered 'create account' link */
+.booking-create-account { display: block; width: fit-content; margin: 18px auto 0; font-size: .82rem; }
+/* Progress row: Dates & rooms, Guest details, Room, Price, Payment */
+.booking-steps { display: flex; justify-content: space-between; gap: 8px; margin: 0 0 22px; padding: 0 0 13px; border-bottom: 1px solid #dedfd9; list-style: none; }
+/* One progress label (grey) */
+.booking-steps li { position: relative; color: #8a9697; font-size: .72rem; font-weight: 600; }
+/* Current step: navy text */
+.booking-steps li.active { color: var(--navy); }
+/* Gold underline under the current step */
+.booking-steps li.active::after { position: absolute; right: 0; bottom: -14px; left: 0; height: 2px; background: var(--gold); content: ""; }
+/* Finished step: green text */
+.booking-steps li.completed { color: var(--success); }
+/* Message bar above the steps (hidden by default) */
+.booking-status { display: none; margin: 0 0 17px; padding: 12px 15px; border-radius: 6px; font-size: .84rem; line-height: 1.5; }
+/* Shows the message bar */
+.booking-status.visible { display: block; }
+/* Red error message */
+.booking-status.error { color: var(--danger); background: #fcf0ee; }
+/* Green success message */
+.booking-status.success { color: var(--success); background: #eaf5ee; }
+/* Padding inside a step card */
+.booking-step { padding: clamp(20px,5vw,38px); }
+/* Gold 'STEP 1 - ...' label */
+.booking-step > .eyebrow { margin-bottom: 9px; color: var(--gold-dark); }
+/* Two-column grid of form fields */
+.booking-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 18px; margin-top: 21px; }
+/* A field that spans both columns (e.g. Room type) */
+.booking-field-wide { grid-column: 1/-1; }
+/* Spacing above each field label */
+.booking-fields label { margin-top: 12px; }
+/* Taller input boxes in the booking form */
+.booking-fields input, .booking-fields select { min-height: 46px; }
+/* Special requests box height */
+.booking-fields textarea { min-height: 100px; }
+/* Greyed-out look for the locked email field */
+.booking-fields input[readonly] { color: #68777a; background: #f2f3f0; }
+/* Space above the search button */
+.booking-submit { margin-top: 22px; }
+/* Area where available rooms appear */
+.booking-results { margin-top: 25px; }
+/* Heading above the room results */
+.booking-results-title { margin: 0 0 13px; color: var(--navy); font: 600 1.3rem var(--serif); }
+/* Grid of available room cards */
+.booking-room-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(215px,1fr)); gap: 13px; }
+/* One available room (white box) */
+.booking-room-card { display: flex; flex-direction: column; padding: 19px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+/* Room type name */
+.booking-room-card h3 { margin: 0; color: var(--navy); font: 600 1.24rem var(--serif); }
+/* Room details text */
+.booking-room-card p { margin: 7px 0 0; color: var(--muted); font-size: .82rem; }
+/* Room number in gold */
+.booking-room-card .booking-room-number { margin-top: 3px; color: var(--gold-dark); font-size: .76rem; }
+/* Nightly price, pushed to the bottom of the card */
+.booking-room-card .booking-room-rate { margin-top: auto; padding: 17px 0 13px; color: var(--navy); font-size: .91rem; font-weight: 700; }
+/* Select button full width */
+.booking-room-card .button { width: 100%; }
+/* Small grey help text under a step heading */
+.booking-help { margin: 8px 0; color: var(--muted); font-size: .85rem; }
+/* 'Optional' tag on the right of a label */
+.booking-optional { float: right; color: var(--muted); font-size: .73rem; font-weight: 400; }
+/* Row with Back / Next buttons at the bottom of each step */
+.booking-controls { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 25px; }
+/* List of summary lines (dates, room, price) */
+.booking-summary-list { margin: 23px 0 0; border-top: 1px solid var(--line); }
+/* One summary line: label left, value right */
+.booking-summary-row { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: .86rem; }
+/* Summary label (grey) */
+.booking-summary-row dt { color: var(--muted); }
+/* Summary value */
+.booking-summary-row dd { margin: 0; color: var(--ink); text-align: right; }
+/* Total line is bold */
+.booking-summary-total { font-weight: 700; }
+/* Total amount in navy */
+.booking-summary-total dd { color: var(--navy); }
+/* Small grey note about taxes/charges */
+.booking-price-note { margin: 16px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.65; }
+/* Box with the 'Pay at the property' radio option */
+.payment-choice { display: flex; align-items: flex-start; gap: 12px; margin-top: 25px; padding: 18px; border: 1px solid #d5dad8; border-radius: 7px; background: #fbfbf9; cursor: pointer; }
+/* The round radio button */
+.payment-choice input { width: 17px; height: 17px; min-height: 0; margin: 2px 0 0; accent-color: var(--navy); }
+/* Stacks the title and description in the option */
+.payment-choice span { display: grid; gap: 5px; }
+/* Option title */
+.payment-choice strong { color: var(--navy); font-size: .89rem; }
+/* Option description */
+.payment-choice small { color: var(--muted); font-size: .8rem; line-height: 1.5; }
+/* Total amount row before completing the booking */
+.booking-final-total { display: flex; justify-content: space-between; gap: 15px; margin-top: 19px; padding: 17px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: .87rem; }
+/* The amount, bigger and navy */
+.booking-final-total strong { color: var(--navy); font-size: 1.06rem; }
+/* Final 'stay is reserved' card, centered */
+.booking-complete { text-align: center; }
+/* Space above the gold label */
+.booking-complete .eyebrow { margin-top: 16px; }
+/* Confirmation text */
+.booking-complete > p:not(.eyebrow) { max-width: 600px; margin: 14px auto 22px; color: var(--muted); line-height: 1.75; }
+/* Green circle with the check mark */
+.booking-confirm-mark { display: grid; width: 54px; height: 54px; place-items: center; margin: auto; border-radius: 50%; color: #fff; background: var(--success); font-size: 1.5rem; }
+
+/* Tablets/phones (760px wide or less): */
+@media (max-width: 760px) {
+  /* Slightly narrower column, less top space */
+  .booking-main { width: min(100% - 30px, 650px); padding-top: 38px; }
+  /* Tighter gaps between step labels */
+  .booking-steps { gap: 5px; }
+  /* Smaller step label text */
+  .booking-steps li { font-size: .66rem; }
+}
+/* Small phones (520px wide or less): */
+@media (max-width: 520px) {
+  /* Shorter header */
+  .booking-header { min-height: 70px; padding: 12px 15px; }
+  /* Smaller logo text */
+  .brand-booking { gap: 7px; font-size: .66rem; }
+  /* Smaller H square */
+  .brand-booking .brand-mark { width: 36px; height: 36px; }
+  /* Smaller subtitle */
+  .brand-booking small { font-size: .48rem; }
+  /* Smaller link text */
+  .booking-home-link { font-size: .7rem; }
+  /* Slightly narrower column, less top space */
+  .booking-main { width: calc(100% - 24px); padding-top: 32px; }
+  /* Tighter gaps between step labels */
+  .booking-steps { gap: 2px; }
+  /* Smaller step label text */
+  .booking-steps li { max-width: 66px; font-size: .58rem; line-height: 1.35; }
+  /* Less padding inside the card */
+  .booking-step { padding: 20px 17px; }
+  /* Form fields in ONE column */
+  .booking-fields { grid-template-columns: 1fr; }
+  /* Wide field no longer needs to span columns */
+  .booking-field-wide { grid-column: auto; }
+  /* Buttons stack, main button on top */
+  .booking-controls { flex-direction: column-reverse; }
+  /* Buttons full width */
+  .booking-controls .button { width: 100%; }
+  /* Smaller text and gaps in summary */
+  .booking-summary-row { gap: 12px; font-size: .81rem; }
+  /* Room cards in ONE column */
+  .booking-room-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUNARA| Team access</title>
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body>
+  <main class="main standalone">
+    <header class="topbar">
+      <div><p class="eyebrow">ADMINISTRATION</p><div class="who">Team access</div></div>
+      <div class="toolbar">
+        <a class="button button-outline" href="dashboard.html">Back to dashboard</a>
+        <button class="button button-outline" type="button" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Team members</h1><p>Create employee accounts with an employee code, assign roles, reset passwords, and deactivate access.</p></div></div>
+      <div class="stat-grid" id="summary"></div>
+    </section>
+
+    <section class="panel section-gap">
+      <div class="section-heading"><div><p class="eyebrow">NEEDS YOU</p><h2>Password reset requests</h2><p>Employees who forgot their password ask here. Set a new temporary password and tell them in person or by phone.</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Employee</th><th>Code</th><th>Position</th><th>Requested</th><th>Action</th></tr></thead><tbody id="requestRows"><tr><td colspan="5">Loading requests…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel section-gap reset-box" id="resetPanel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">TEMPORARY PASSWORD</p><h2 id="resetTitle">Set a temporary password</h2><p>The employee will be asked to choose their own password the next time they sign in. You will not be able to see it afterwards.</p></div></div>
+      <div class="inline-actions">
+        <div><label for="resetPassword">Temporary password <span class="optional">12+ chars, uppercase and number</span></label><input id="resetPassword" type="text" minlength="12" maxlength="128" autocomplete="off" spellcheck="false" /></div>
+        <button class="button button-outline" type="button" id="resetGenerateBtn">Generate</button>
+        <button class="button button-primary" type="button" id="resetSaveBtn">Set temporary password</button>
+        <button class="button button-outline" type="button" id="resetCancelBtn">Close</button>
+      </div>
+      <div class="msg form-message" id="resetMsg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel section-gap">
+      <div class="section-heading"><div><p class="eyebrow">STAFF DIRECTORY</p><h2>Employee accounts</h2></div></div>
+      <div class="toolbar">
+        <div><label for="userSearch">Search</label><input id="userSearch" type="search" placeholder="Name, code, or position" /></div>
+        <div><label for="roleFilter">Role</label><select id="roleFilter"><option value="all">All roles</option></select></div>
+        <div><label for="statusFilter">Status</label>
+          <select id="statusFilter"><option value="all">All</option><option value="active">Active</option><option value="inactive">Deactivated</option></select>
+        </div>
+      </div>
+      <div class="msg form-message" id="msg" role="status" aria-live="polite"></div>
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Employee code</th><th>Phone</th><th>Role</th><th>Position</th><th>Status</th><th>Account action</th></tr></thead><tbody id="userRows"><tr><td colspan="7">Loading team…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel section-gap">
+      <div class="section-heading"><div><p class="eyebrow">NEW TEAM MEMBER</p><h2>Create employee account</h2><p>You choose the employee code and a temporary password. No email is sent. The employee signs in with the code and must choose their own password the first time.</p></div></div>
+      <form id="empForm" class="form-grid">
+        <div><label for="employeeCode">Employee code <span class="optional">3–20 letters and numbers</span></label><input id="employeeCode" required minlength="3" maxlength="20" pattern="[A-Za-z0-9]{3,20}" autocomplete="off" autocapitalize="characters" /></div>
+        <div><label for="fullName">Full name</label><input id="fullName" required maxlength="120" autocomplete="off" /></div>
+        <div><label for="password">Temporary password <span class="optional">12+ chars, uppercase and number</span></label><input id="password" type="text" minlength="12" maxlength="128" required autocomplete="off" spellcheck="false" /></div>
+        <div><label>&nbsp;</label><button class="button button-outline" type="button" id="generateBtn">Generate password</button></div>
+        <div><label for="role">Role</label><select id="role" required></select></div>
+        <div><label for="position">Position / title</label><input id="position" maxlength="120" /></div>
+        <div><label for="phone">Phone</label><input id="phone" type="tel" maxlength="32" /></div>
+        <div class="form-actions"><button class="button button-primary" type="submit" id="createBtn">Create account</button></div>
+        <div class="msg form-message" id="createMsg" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/role-guard.js"></script>
+  <!-- Admin only: other staff roles are sent back to their own dashboard -->
+  <script>RoleGuard.require("staff", ["admin"]);</script>
+  <script src="../assets/js/admin-users.js"></script>
+</body>
+</html>

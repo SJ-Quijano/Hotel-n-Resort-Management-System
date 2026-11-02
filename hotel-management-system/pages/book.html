@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <meta name="description" content="Check room availability and book your LUNARA stay." />
+  <title>LUNARA | Book your stay</title>
+  <link rel="stylesheet" href="../assets/css/Booking.css" />
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+</head>
+<body class="booking-page">
+  <header class="booking-header">
+    <a class="brand brand-booking" href="home.html">
+      <span class="brand-mark">L</span>
+      <span>LUNARA<small>HOTEL &amp; RESORT</small></span>
+    </a>
+    <a class="booking-home-link" href="home.html">← Back to the resort</a>
+  </header>
+
+  <main class="booking-main">
+    <section class="booking-intro">
+      <p class="eyebrow">YOUR COASTAL ESCAPE</p>
+      <h1>Book your <em>stay.</em></h1>
+      <p>Find your dates, choose a room, and we’ll take care of the rest.</p>
+    </section>
+
+    <div id="bookingApp" hidden>
+      <ol class="booking-steps" aria-label="Booking steps">
+        <li class="active" data-step-label="1">Dates &amp; rooms</li>
+        <li data-step-label="2">Guest details</li>
+        <li data-step-label="3">Room</li>
+        <li data-step-label="4">Price</li>
+        <li data-step-label="5">Payment</li>
+      </ol>
+      <div class="booking-status" id="bookingStatus" role="status" aria-live="polite"></div>
+
+      <section class="booking-step panel" id="stepSearch" aria-labelledby="searchTitle">
+        <p class="eyebrow">STEP 1 · FIND AVAILABILITY</p>
+        <h2 id="searchTitle">When would you like to stay?</h2>
+        <form id="availabilityForm">
+          <div class="booking-fields">
+            <div>
+              <label for="checkIn">Check-in date</label>
+              <input id="checkIn" name="checkIn" type="date" required />
+            </div>
+            <div>
+              <label for="checkInTime">Arrival time</label>
+              <input id="checkInTime" name="checkInTime" type="time" value="15:00" required />
+            </div>
+            <div>
+              <label for="checkOut">Check-out date</label>
+              <input id="checkOut" name="checkOut" type="date" required />
+            </div>
+            <div>
+              <label for="checkOutTime">Departure time</label>
+              <input id="checkOutTime" name="checkOutTime" type="time" value="11:00" required />
+            </div>
+            <div>
+              <label for="adults">Adults</label>
+              <input id="adults" name="adults" type="number" min="1" max="20" value="1" required />
+            </div>
+            <div>
+              <label for="children">Children</label>
+              <input id="children" name="children" type="number" min="0" max="20" value="0" required />
+            </div>
+            <div class="booking-field-wide">
+              <label for="roomType">Room type</label>
+              <select id="roomType" name="roomType">
+                <option value="">All room types</option>
+              </select>
+            </div>
+          </div>
+          <button class="button button-primary booking-submit" id="searchRooms" type="submit">Search available rooms</button>
+        </form>
+        <div class="booking-results" id="bookingResults"></div>
+      </section>
+
+      <section class="booking-step panel" id="stepGuest" aria-labelledby="guestTitle" hidden>
+        <p class="eyebrow">STEP 2 · GUEST DETAILS</p>
+        <h2 id="guestTitle">Who’s staying with us?</h2>
+        <p class="booking-help">These details will be used for your reservation.</p>
+        <form id="guestForm">
+          <div class="booking-fields">
+            <div>
+              <label for="guestName">Full name</label>
+              <input id="guestName" name="guestName" type="text" autocomplete="name" maxlength="120" required />
+            </div>
+            <div>
+              <label for="guestEmail">Email address</label>
+              <input id="guestEmail" name="guestEmail" type="email" autocomplete="email" maxlength="254" readonly />
+            </div>
+            <div>
+              <label for="guestPhone">Phone number</label>
+              <input id="guestPhone" name="guestPhone" type="tel" autocomplete="tel" maxlength="32" required />
+            </div>
+            <div class="booking-field-wide">
+              <label for="specialRequests">Special requests <span class="booking-optional">Optional</span></label>
+              <textarea id="specialRequests" name="specialRequests" maxlength="1000" placeholder="Let us know if there’s anything that would make your stay more comfortable."></textarea>
+            </div>
+          </div>
+          <div class="booking-controls">
+            <button class="button button-outline" type="button" data-back="search">Back to rooms</button>
+            <button class="button button-primary" type="submit">Review room</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="booking-step panel" id="stepRoom" aria-labelledby="roomTitle" hidden>
+        <p class="eyebrow">STEP 3 · ROOM DETAILS</p>
+        <h2 id="roomTitle">Your room and stay</h2>
+        <div class="booking-summary" id="roomSummary"></div>
+        <div class="booking-controls">
+          <button class="button button-outline" type="button" data-back="guest">Back to guest details</button>
+          <button class="button button-primary" type="button" data-next="price">Review price</button>
+        </div>
+      </section>
+
+      <section class="booking-step panel" id="stepPrice" aria-labelledby="priceTitle" hidden>
+        <p class="eyebrow">STEP 4 · PRICE DETAILS</p>
+        <h2 id="priceTitle">A clear look at your stay</h2>
+        <div class="booking-summary" id="priceSummary"></div>
+        <p class="booking-price-note">This estimate is based on the room’s current nightly rate. Any applicable taxes or additional charges will be confirmed by the property.</p>
+        <div class="booking-controls">
+          <button class="button button-outline" type="button" data-back="room">Back to room details</button>
+          <button class="button button-primary" type="button" data-next="payment">Continue to payment</button>
+        </div>
+      </section>
+
+      <section class="booking-step panel" id="stepPayment" aria-labelledby="paymentTitle" hidden>
+        <p class="eyebrow">STEP 5 · PAYMENT</p>
+        <h2 id="paymentTitle">Choose how to pay</h2>
+        <label class="payment-choice">
+          <input type="radio" name="paymentMethod" value="pay_at_property" checked />
+          <span><strong>Pay at the property</strong><small>Payment is due at check-in. No online payment will be taken now.</small></span>
+        </label>
+        <div class="booking-final-total" id="finalTotal"></div>
+        <p class="booking-price-note">Online card payments are not currently available. Your room is reserved when you complete this booking.</p>
+        <div class="booking-controls">
+          <button class="button button-outline" type="button" data-back="price">Back to price details</button>
+          <button class="button button-primary" type="button" id="completeBooking">Complete booking</button>
+        </div>
+      </section>
+
+      <section class="booking-step panel booking-complete" id="stepComplete" hidden>
+        <div class="booking-confirm-mark" aria-hidden="true">✓</div>
+        <p class="eyebrow">YOUR STAY IS RESERVED</p>
+        <h2>We can’t wait to welcome you.</h2>
+        <p id="confirmationDetails"></p>
+        <a class="button button-primary" href="guest-dashboard.html">Back to Harbor &amp; Pine</a>
+      </section>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/booking.js"></script>
+</body>
+</html>

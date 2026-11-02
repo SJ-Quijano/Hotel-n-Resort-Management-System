@@ -1,0 +1,101 @@
+
+/* Home page only: slightly darker beige background */
+body.home-page { background: #eceae5; }
+/* Big photo banner at the top of the home page */
+.home-hero { position: relative; display: flex; min-height: 640px; align-items: center; padding: 54px clamp(18px,4vw,42px) 108px; color: #fff; background: linear-gradient(90deg, rgba(10,30,39,.72), rgba(10,30,39,.3) 56%, rgba(10,30,39,.05)), url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2200&q=85") center 48% / cover; }
+/* Text block (heading, paragraph, button) inside the banner */
+.hero-content { max-width: 520px; margin-top: 18px; }
+/* Shared look of the big serif headings on the home page */
+.home-hero h1, .welcome-copy h2, .stay-card h2, .experiences-heading h2 { margin: 0; font: 500 clamp(2.3rem,4vw,4rem)/1.1 var(--serif); letter-spacing: -.035em; }
+/* Hero heading: extra large, tight spacing */
+.home-hero h1 { font-size: clamp(3.1rem,4vw,5.3rem); line-height: .9; letter-spacing: -.05em; }
+/* Gold italic words in the hero heading ('sea') */
+.home-hero h1 em { color: var(--gold-soft); font-weight: 500; }
+/* Paragraph under the hero heading */
+.hero-copy { max-width: 390px; margin: 18px 0 28px; color: rgba(255,255,255,.86); font-size: 1.02rem; line-height: 1.65; }
+/* 'SCROLL TO EXPLORE' link at the bottom-left of the banner */
+.hero-scroll { position: absolute; bottom: 30px; left: clamp(18px,4vw,42px); display: inline-flex; align-items: center; gap: 11px; color: #fff; text-decoration: none; font-size: .6rem; letter-spacing: .17em; }
+/* Little gold line before that text */
+.hero-scroll span { width: 30px; height: 1px; background: var(--gold); }
+/* Small caption at the bottom-right of the banner */
+.hero-caption { position: absolute; right: clamp(28px,7vw,110px); bottom: 30px; color: rgba(255,255,255,.72); font-size: .58rem; letter-spacing: .16em; }
+
+/* Glass-style date/guest search bar over the banner (not used in your HTML yet) */
+.booking-bar { position: absolute; left: clamp(18px,4vw,42px); right: clamp(18px,4vw,42px); bottom: 24px; z-index: 2; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)) 160px; gap: 12px; padding: 12px; border: 1px solid rgba(255,255,255,.28); border-radius: 10px; background: rgba(255,255,255,.12); backdrop-filter: blur(2px); }
+/* One box inside that search bar */
+.booking-field { display: flex; min-height: 72px; flex-direction: column; justify-content: center; gap: 8px; padding: 12px 16px; border: 1px solid rgba(255,255,255,.24); border-radius: 10px; background: rgba(255,255,255,.06); color: #fff; }
+/* Small label inside a search box */
+.field-label { color: rgba(255,255,255,.74); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; }
+/* Value text inside a search box */
+.field-value { color: rgba(255,255,255,.96); font-size: .9rem; }
+/* Gold search button in the bar */
+.booking-search-button { min-height: 72px; border: 0; border-radius: 10px; background: var(--gold-soft); color: #183548; font-weight: 700; letter-spacing: .02em; }
+
+/* 'About Harbor & Pine' intro: heading left, text right */
+.welcome-section { display: grid; max-width: 1280px; grid-template-columns: 1.1fr 1fr; align-items: end; gap: 42px; margin: 0 auto; padding: 52px 24px 58px; }
+/* Darker gold small labels on light backgrounds */
+.welcome-section .eyebrow, .stay-card .eyebrow, .experiences-heading .eyebrow { color: var(--gold-dark); }
+/* These headings are navy on light backgrounds */
+.welcome-copy h2, .stay-card h2, .experiences-heading h2 { color: var(--navy); }
+/* Gold highlighted words in those headings */
+.welcome-copy h2 em, .stay-card h2 em, .experiences-heading h2 em { color: var(--gold-dark); font-weight: 500; }
+/* Grey paragraph beside the welcome heading */
+.welcome-description { max-width: 420px; margin: 0 0 5px; color: #66757a; font-size: .91rem; line-height: 1.9; }
+
+/* Section with big pool photo and an overlapping text card */
+.stay-section { position: relative; display: flex; max-width: 1280px; min-height: 560px; align-items: center; margin: 0 auto; padding: 28px 24px 58px; background: #eeeee8; }
+/* The large pool photo */
+.stay-image { width: 69%; min-height: 520px; background: url("https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1500&q=85") center / cover; }
+/* White card sitting on top of the photo */
+.stay-card { position: absolute; right: clamp(25px,13vw,200px); width: min(440px,47%); padding: clamp(30px,5vw,62px); background: #fbfaf7; box-shadow: 0 16px 55px rgba(18,43,58,.09); }
+/* Paragraph inside that card */
+.stay-card > p:not(.eyebrow) { margin: 18px 0 24px; color: #66757a; font-size: .88rem; line-height: 1.8; }
+
+/* 'Room to do a little more' section */
+.experiences-section { max-width: 1280px; margin: auto; padding: 112px 35px 120px; }
+/* Space under that section heading */
+.experiences-heading { margin-bottom: 38px; }
+/* Three experience cards in a row */
+.experience-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+/* One tall photo card with text at the bottom */
+.experience-card { display: flex; min-height: 330px; flex-direction: column; justify-content: flex-end; padding: 25px; border-radius: 12px; overflow: hidden; color: #fff; background-position: center; background-size: cover; }
+/* Photo + dark fade for card 'By the water' */
+.experience-water { background-image: linear-gradient(0deg,rgba(9,30,39,.76),rgba(9,30,39,.03) 80%), url("https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=850&q=80"); }
+/* Photo + dark fade for card 'Gather around' */
+.experience-table { background-image: linear-gradient(0deg,rgba(9,30,39,.76),rgba(9,30,39,.03) 80%), url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=850&q=80"); }
+/* Photo + dark fade for card 'Find your quiet' */
+.experience-pines { background-image: linear-gradient(0deg,rgba(9,30,39,.76),rgba(9,30,39,.03) 80%), url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=850&q=80"); }
+/* Small number (01, 02, 03) at the top of the card */
+.experience-number { margin-bottom: auto; color: #e2c89f; font-size: .67rem; letter-spacing: .14em; }
+/* Card title */
+.experience-card h3 { margin: 20px 0 7px; font: 500 1.6rem var(--serif); }
+/* Card description */
+.experience-card p { max-width: 280px; margin: 0; color: rgba(255,255,255,.84); font-size: .79rem; line-height: 1.65; }
+
+/* Tablets: search bar shows 2 boxes per row */
+@media (max-width: 1024px) { .booking-bar { grid-template-columns: repeat(2,minmax(0,1fr)); bottom: 18px; } }
+/* Phones (760px wide or less): */
+@media (max-width: 760px) {
+  /* Taller banner so everything fits, photo shifts to show the middle */
+  .home-hero { min-height: 720px; padding: 38px 24px 220px; background-position: 58% center; }
+  /* Search bar boxes stack in one column */
+  .booking-bar { grid-template-columns: 1fr; left: 18px; right: 18px; }
+  /* Hide the small caption on phones */
+  .hero-caption { display: none; }
+  /* Scroll link moves closer to the left edge */
+  .hero-scroll { left: 24px; }
+  /* Heading and text stack on top of each other */
+  .welcome-section { grid-template-columns: 1fr; gap: 20px; padding: 68px 24px; }
+  /* Photo on top, card below it */
+  .stay-section { min-height: 680px; align-items: flex-start; padding: 18px; }
+  /* Photo fills the full width */
+  .stay-image { width: 100%; min-height: 360px; }
+  /* Card fills the width at the bottom of the photo */
+  .stay-card { right: 18px; bottom: 18px; width: calc(100% - 36px); padding: 29px; }
+  /* Smaller side spacing */
+  .experiences-section { padding: 78px 24px; }
+  /* Experience cards stack in one column */
+  .experience-grid { grid-template-columns: 1fr; }
+  /* Slightly shorter cards */
+  .experience-card { min-height: 280px; }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <meta name="description" content="Discover a slower, more considered stay at Harbor & Pine Hotel & Resort." />
+  <title>LUNARA | Hotel &amp; Resort</title>
+  <link rel="stylesheet" href="../assets/css/Public.css" />
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+  <link rel="stylesheet" href="../assets/css/Home.css" />
+</head>
+<body class="home-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand brand-home" href="home.html" aria-label="Harbor and Pine home">
+        <span class="brand-mark">L</span>
+        <span>LUNARA<small>HOTEL &amp; RESORT</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="home.html" aria-current="page">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="rooms.html">Rooms</a> 
+        /*<a href="dining.html">Dining</a>*/ pause ka muna boi
+      </nav>
+      <nav class="site-actions" aria-label="Quick links">
+        <a class="site-action login-link" href="index.html" aria-label="Log in">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/></svg>
+          <span>Log in</span>
+        </a>
+        <a class="site-action contact-link" href="mailto:reservations@harborpine.com" aria-label="Email Harbor and Pine">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <span>Contact us</span>
+        </a>
+        <a class="button button-primary book-button" href="book.html">Book now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="home-hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="hero-kicker">A QUIETER KIND OF GETAWAY</p>
+        <h1 id="hero-title">Your escape, your place, <br /> your, <em>LUNARA</em></h1>
+        <p class="hero-copy">Slow mornings, thoughtful comforts, and effortless relaxation. Welcome to LUNARA.</p>
+        <a class="button button-light" href="book.html">Discover your stay <span aria-hidden="true">→</span></a>
+      </div>
+
+      <a class="hero-scroll" href="#about"><span aria-hidden="true"></span> SCROLL TO EXPLORE</a>
+      <div class="hero-caption">COASTAL LIVING, THOUGHTFULLY REIMAGINED</div>
+    </section>
+
+    <section class="welcome-section" id="about">
+      <div class="welcome-copy">
+        <p class="eyebrow">ABOUT LUNARA</p>
+        <h2>Some places invite you<br />to simply <em>stay awhile.</em></h2>
+      </div>
+      <p class="welcome-description">LUNARA Hotel & Resort is a place where comfort meets relaxation. Our idea of a perfect stay is simple: thoughtful comforts, space to unwind, and time for the moments that matter. Whether you're here for a weekend getaway or a well-deserved escape, make yourself at home and let every moment unfold.</p>
+    </section>
+
+    <section class="stay-section" id="the-stay">
+      <div class="stay-image" role="img" aria-label="A peaceful resort pool surrounded by palms and tropical greenery"></div>
+      <div class="stay-card">
+        <p class="eyebrow">MAKE YOURSELF AT HOME</p>
+        <h2>A stay that feels<br />like <em>your own.</em></h2>
+        <p>Ease into the day in a thoughtfully appointed room, wander down to the water, or settle in and let the afternoon unfold.</p>
+        <a class="text-link" href="book.html">Explore a stay <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="experiences-section" id="experiences">
+      <div class="experiences-heading">
+        <p class="eyebrow">THE GOOD THINGS</p>
+        <h2>Room to do a little<br /><em>more—or nothing at all.</em></h2>
+      </div>
+      <div class="experience-grid">
+        <article class="experience-card experience-water">
+          <div class="experience-number">01</div>
+          <h3>By the water</h3>
+          <p>Take the scenic route to the shore and let the day find its own rhythm.</p>
+        </article>
+        <article class="experience-card experience-table">
+          <div class="experience-number">02</div>
+          <h3>Gather around</h3>
+          <p>Good food, familiar faces, and one more story before the evening ends.</p>
+        </article>
+        <article class="experience-card experience-pines">
+          <div class="experience-number">03</div>
+          <h3>Find your quiet</h3>
+          <p>Trade the rush for fresh air, shady paths, and a little space to reset.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand-home" href="home.html">
+      <span class="brand-mark">L</span>
+      <span>LUNARA<small>HOTEL &amp; RESORT</small></span>
+    </a>
+    <p>Closer to comfort. Further from the everyday. Welcome to LUNARA.</p>
+    <a href="book.html">Plan your stay <span aria-hidden="true">→</span></a>
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/role-guard.js"></script>
+<script>RoleGuard.redirectIfLoggedIn();</script>
+</body>
+</html>

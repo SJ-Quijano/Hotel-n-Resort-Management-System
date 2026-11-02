@@ -1,0 +1,30 @@
+/* about.css — about.html only. Load AFTER base.css + public.css */
+/* About page story block: heading left, text right */
+.about-story { display: grid; max-width: 1180px; grid-template-columns: 1fr 1fr; gap: clamp(35px,8vw,115px); margin: auto; padding: 100px 35px 88px; }
+/* Darker gold small label */
+.about-story .eyebrow { color: var(--gold-dark); }
+/* Big navy heading of the story */
+.about-story h2 { margin: 0; color: var(--navy); font: 500 clamp(2.2rem,4vw,3.5rem)/1.16 var(--serif); }
+/* Text column, vertically centered next to the heading */
+.about-story-copy { align-self: center; }
+/* Grey paragraphs of the story */
+.about-story-copy p { margin: 0 0 18px; color: #66757a; font-size: .93rem; line-height: 1.9; }
+/* Row of 3 value boxes (01, 02, 03) */
+.about-values { display: grid; max-width: 1180px; grid-template-columns: repeat(3,1fr); gap: 18px; margin: auto; padding: 0 35px 105px; }
+/* One grey value box */
+.about-values article { min-height: 215px; padding: 27px; background: #f0eee8; }
+/* The small number in the box */
+.about-values article > span { color: var(--gold-dark); font-size: .7rem; font-weight: 700; letter-spacing: .14em; }
+/* Value title */
+.about-values h2 { margin: 30px 0 9px; color: var(--navy); font: 500 1.45rem var(--serif); }
+/* Value description */
+.about-values p { margin: 0; color: #66757a; font-size: .82rem; line-height: 1.7; }
+/* Tablets/phones (760px wide or less): */
+@media (max-width: 760px) {
+  /* Heading and text stack on top of each other */
+  .about-story { grid-template-columns: 1fr; gap: 22px; padding: 75px 30px 60px; }
+  /* Value boxes stack in one column */
+  .about-values { grid-template-columns: 1fr; padding: 0 30px 75px; }
+}
+/* Small phones: slightly smaller side spacing */
+@media (max-width: 520px) { .about-story { padding: 65px 24px 48px; } .about-values { padding: 0 24px 65px; } }

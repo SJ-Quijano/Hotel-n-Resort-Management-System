@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <title>LUNARA | Administration</title>
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="adm">
+  <div class="adm-shell">
+    <aside class="adm-side" id="sideBar">
+      <a class="adm-brand" href="admin.html">
+        <span class="adm-mark">H</span>
+        <span>LUNARA <small>ADMINISTRATION</small></span>
+      </a>
+      <p class="adm-label">SYSTEM</p>
+      <nav id="nav" aria-label="Administration"></nav>
+      <div class="adm-foot"><button type="button" id="logoutBtn">Log out</button></div>
+    </aside>
+
+    <main class="adm-main">
+      <header class="adm-top">
+        <button type="button" id="menuBtn" class="adm-menu" aria-label="Open menu">☰</button>
+        <div class="adm-who">
+          <p class="adm-eyebrow" id="eyebrow">ADMINISTRATION</p>
+          <div>Signed in as <strong id="userName">…</strong></div>
+        </div>
+        <span class="adm-badge">Administrator</span>
+      </header>
+      <div id="notice" class="adm-notice" role="status" aria-live="polite" hidden></div>
+      <section id="content" aria-live="polite"><div class="adm-panel"><p>Loading…</p></div></section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/role-guard.js"></script>
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <meta name="description" content="Explore room types at LUNARA Hotel & Resort." />
+  <title>LUNARA | Rooms</title>
+  <link rel="stylesheet" href="../assets/css/Rooms.css" />
+  <link rel="stylesheet" href="../assets/css/public.css" />
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+</head>
+<body class="home-page rooms-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand brand-home" href="home.html" aria-label="LUNARA home">
+        <span class="brand-mark">L</span>
+        <span>LUNARA<small>HOTEL &amp; RESORT</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="home.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="rooms.html" aria-current="page">Rooms</a>
+      </nav>
+      <nav class="site-actions" aria-label="Quick links">
+        <a class="site-action" href="index.html" aria-label="Log in">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/></svg>
+          <span>Log in</span>
+        </a>
+        <a class="site-action" href="mailto:reservations@harborpine.com" aria-label="Contact us">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <span>Contact</span>
+        </a>
+        <a class="button button-primary book-button" href="book.html">Book now</a>
+      </nav>
+    </div>
+  </header>
+  <main class="public-page rooms-page-main">
+    <section class="rooms-showcase" aria-label="Featured rooms">
+      <div class="rooms-showcase-image" role="img" aria-label="Luxury resort bedroom"></div>
+      <div class="rooms-showcase-copy">
+        <h1 id="rooms-title">Rooms for a slower <em>stay.</em></h1>
+        <p>Explore our room types, compare the details, and find the stay that feels right for you.</p>
+      </div>
+      <div class="room-kind-tabs" aria-label="Room filters">
+        <button class="kind-tab is-active" type="button">All Rooms</button>
+        <button class="kind-tab" type="button">Standard</button>
+        <button class="kind-tab" type="button">Deluxe</button>
+        <button class="kind-tab" type="button">Family</button>
+        <button class="kind-tab" type="button">Suite</button>
+      </div>
+    </section>
+
+    <section class="rooms-section" aria-labelledby="rooms-title">
+      <div class="rooms-heading">
+        <div>
+          <p class="eyebrow">FIND YOUR PLACE TO STAY</p>
+          <h1 id="rooms-title-secondary">Rooms for a slower <em>stay.</em></h1>
+        </div>
+        <p>Explore our room types, compare the details, and find the stay that feels right for you.</p>
+      </div>
+      <div class="public-room-grid" id="publicRoomGrid" aria-live="polite">
+        <p class="room-list-status">Loading room types…</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a class="brand brand-home" href="home.html">
+      <span class="brand-mark">L</span>
+      <span>LUNARA<small>HOTEL &amp; RESORT</small></span>
+    </a>
+    <p>Closer to comfort. Further from the everyday. Welcome to LUNARA.</p>
+    <a href="book.html">Plan your stay <span aria-hidden="true">→</span></a>
+  </footer>
+  <dialog class="room-detail-dialog" id="roomDetailDialog" aria-labelledby="roomDetailTitle">
+    <button class="room-detail-close" type="button" aria-label="Close room details">×</button>
+    <div class="room-detail-art" data-room-art aria-hidden="true"></div>
+    <div class="room-detail-copy">
+      <p class="eyebrow">ROOM DETAILS</p>
+      <h2 id="roomDetailTitle"></h2>
+      <p class="room-detail-description" id="roomDetailDescription"></p>
+      <dl class="room-detail-facts">
+        <div><dt>Maximum guests</dt><dd id="roomDetailCapacity"></dd></div>
+        <div><dt>Nightly rate</dt><dd id="roomDetailRate"></dd></div>
+      </dl>
+      <a class="button button-primary" href="book.html">Check availability</a>
+    </div>
+  </dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/public-home.js"></script>
+  <script src="../assets/js/role-guard.js"></script>
+<script>RoleGuard.redirectIfLoggedIn();</script>
+</body>
+</html>

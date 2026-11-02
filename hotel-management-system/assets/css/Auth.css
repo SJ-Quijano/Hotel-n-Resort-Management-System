@@ -1,0 +1,23 @@
+
+/* Login/signup page: dark navy background */
+.auth-page { background: var(--navy); }
+/* Centers the white card in the middle of the screen over a gradient */
+.auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 28px 16px; background: linear-gradient(145deg, rgba(18,43,58,.97), rgba(31,67,81,.94)), radial-gradient(ellipse at 70% 20%, #8a795b, transparent 55%); }
+/* The white login/signup box */
+.auth-card { width: min(100%, 450px); padding: 38px 40px; border: 1px solid rgba(255,255,255,.55); border-radius: 14px; background: var(--white); box-shadow: 0 24px 70px rgba(0,0,0,.2); }
+/* Logo inside the white card (navy instead of white) */
+.brand-auth { color: var(--navy); margin-bottom: 32px; }
+/* Heading in the card ('Welcome back', 'Create a guest account') */
+.auth-card h1 { margin: 0; color: var(--navy); font: 600 1.7rem var(--serif); }
+/* Grey sentence under the heading */
+.auth-card .sub { margin: 8px 0 23px; color: var(--muted); line-height: 1.55; font-size: .9rem; }
+/* Small centered line such as 'Already registered? Sign in' */
+.switch { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: .84rem; }
+/* Bold links inside that line */
+.switch a { font-weight: 600; }
+/* Phones: less padding inside the card */
+@media (max-width: 520px) { .auth-card { padding: 28px 22px; } }
+
+/* back button floats over the card on login/signup */
+/* Back button floats at top-left of the screen on login/signup */
+.auth-page .back-link { position: fixed; top: 16px; left: 16px; z-index: 1000; margin: 0; }

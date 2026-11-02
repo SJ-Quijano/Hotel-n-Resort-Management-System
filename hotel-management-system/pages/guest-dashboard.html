@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LUNARA | Guest Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/guest.css" />
+</head>
+<body class="guest">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">L</span><span>LUNARA</span></div>
+    <nav>
+      <button class="nav-btn" data-view="profile">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>My Profile
+      </button>
+      <button class="nav-btn active" data-view="overview">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview
+      </button>
+      <button class="nav-btn" data-view="rooms">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/></svg>Browse Rooms
+      </button>
+      <a class="nav-btn" href="book.html">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Book a Room
+      </a>
+      <button class="nav-btn" data-view="bookings">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>My Reservations
+      </button>
+      <button class="nav-btn" data-view="billing">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Billing &amp; Receipts
+      </button>
+      <button class="nav-btn" data-view="reviews">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>Feedback &amp; Reviews
+      </button>
+
+    </nav>
+    <button class="nav-btn logout" id="logoutBtn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>Log out
+    </button>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+      <h1 id="viewTitle">Overview</h1>
+      <div class="user-chip"><span id="guestName">Guest</span></div>
+    </header>
+
+    <div id="banner" class="banner" hidden></div>
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="hero">
+        <h2>Welcome back<span id="heroName"></span></h2>
+        <p>Your reservations, billing and receipts are all in one place.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>Upcoming stays</small><b id="statUpcoming">0</b></div>
+        <div class="stat"><small>Past stays</small><b id="statPast">0</b></div>
+        <div class="stat"><small>Balance due</small><b id="statDue">0</b></div>
+      </div>
+      <div class="card" id="nextStay"></div>
+      <div class="card" id="hotelInfo"></div>
+    </section>
+
+    <!-- ROOMS (public room types) -->
+    <section class="view" id="view-rooms">
+      <p class="muted">Room types and nightly rates. Pick one and continue to the booking page to check availability for your dates.</p>
+      <div class="grid" id="roomGrid"></div>
+    </section>
+
+    <!-- RESERVATIONS -->
+    <section class="view" id="view-bookings">
+      <div class="tabs">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="upcoming">Upcoming</button>
+        <button class="tab" data-filter="past">Past</button>
+        <button class="tab" data-filter="cancelled">Cancelled</button>
+      </div>
+      <div id="bookingList" class="list"></div>
+    </section>
+
+    <!-- BILLING -->
+    <section class="view" id="view-billing">
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Invoice</th><th>Stay</th><th>Total</th><th>Paid</th><th>Status</th><th></th></tr></thead>
+            <tbody id="billingRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="view" id="view-reviews">
+      <form class="card" id="reviewForm">
+        <h2>Share your feedback</h2>
+        <label>Completed stay <select id="reviewReservation" required></select></label>
+        <label>Rating
+          <select id="reviewRating">
+            <option value="5">★★★★★ Excellent</option>
+            <option value="4">★★★★ Good</option>
+            <option value="3">★★★ Okay</option>
+            <option value="2">★★ Poor</option>
+            <option value="1">★ Terrible</option>
+          </select>
+        </label>
+        <label>Comment <textarea id="reviewText" rows="4" maxlength="1000" placeholder="Tell us about your stay"></textarea></label>
+        <button class="btn primary" type="submit">Submit feedback</button>
+      </form>
+      <div id="reviewList" class="list"></div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="view" id="view-profile">
+      <form class="card" id="profileForm">
+        <label>Full name <input id="pName" required maxlength="120" /></label>
+        <label>Email <input id="pEmail" type="email" disabled /></label>
+        <label>Phone <input id="pPhone" maxlength="40" /></label>
+        <label>Address <input id="pAddress" maxlength="200" /></label>
+        <button class="btn primary" type="submit">Save changes</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-box">
+      <button class="close" id="modalClose" aria-label="Close">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/role-guard.js"></script>
+  <script src="../assets/js/guest-dashboard.js"></script>
+
+  <!-- Copies the guest's first name into the welcome hero once the dashboard script sets it -->
+  <script>
+    (function () {
+      var src = document.getElementById('guestName');
+      var out = document.getElementById('heroName');
+      if (!src || !out) return;
+      function sync() {
+        var name = (src.textContent || '').trim();
+        out.textContent = name && name !== 'Guest' ? ', ' + name.split(/\s+/)[0] : '';
+      }
+      sync();
+      new MutationObserver(sync).observe(src, { childList: true, characterData: true, subtree: true });
+    })();
+  </script>
+</body>
+</html>

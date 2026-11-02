@@ -1,0 +1,5 @@
+{
+  "deno.enablePaths": [
+    "hotel-management-system/supabase/functions"
+  ]
+}

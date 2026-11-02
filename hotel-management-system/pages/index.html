@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b3a" />
+  <title>LUNARA | Sign in</title>
+  <link rel="stylesheet" href="../assets/css/Base.css" />
+  <link rel="stylesheet" href="../assets/css/Auth.css" />
+</head>
+<body class="auth-page">
+  <a class="back-link" id="authBack" href="home.html" aria-label="Go back to home"><span aria-hidden="true">←</span> Back</a>
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <a class="brand brand-auth" href="index.html"><span class="brand-mark">L</span><span>LUNARA</span></a>
+      <form id="loginForm">
+        <p class="eyebrow">HOTEL &amp; RESORT MANAGEMENT</p>
+        <h1>Welcome back</h1>
+        <p class="sub">Sign in to manage your stay or property operations.</p>
+        <label for="email">Email</label>
+        <input type="text" id="email" required maxlength="254" autocomplete="username" autocapitalize="none" spellcheck="false" />
+        <label for="password">Password</label>
+        <input type="password" id="password" required autocomplete="current-password" />
+        <p class="switch"><a id="forgotPasswordLink" href="#recovery">Forgot password?</a></p>
+        <button class="button button-primary button-wide" type="submit" id="loginBtn">Sign in</button>
+      </form>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      <p class="switch" id="loginSignupSwitch">New to LUNARA? <a id="signupLink" href="signup.html">Create an account</a></p>
+
+      <!-- Forgot password: an email gets a code by email, an employee code asks the administrator di na kaya ng powers ko -->
+      <section id="recoveryPanel" hidden>
+        <p class="eyebrow">ACCOUNT RECOVERY</p>
+        <h1>Reset your password</h1>
+        <p class="sub">Guests: we’ll email you a recovery code. Employees: enter your employee code and your administrator will be asked to set a new password for you.</p>
+        <label for="recoveryEmail">Email</label>
+        <input type="text" id="recoveryEmail" maxlength="254" autocomplete="username" autocapitalize="none" spellcheck="false" />
+        <button class="button button-primary button-wide" type="button" id="requestRecoveryCodeBtn">Reset my password</button>
+        <form id="recoveryCodeForm">
+          <div id="recoveryCodeFields" hidden>
+            <label for="recoveryCode">Email recovery code</label>
+            <input type="text" id="recoveryCode" required minlength="6" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code" inputmode="numeric" />
+            <label for="recoveryPassword">New password <span class="optional">12+ characters, uppercase and number</span></label>
+            <input type="password" id="recoveryPassword" required minlength="12" maxlength="128" autocomplete="new-password" />
+            <label for="recoveryConfirmation">Confirm new password</label>
+            <input type="password" id="recoveryConfirmation" required minlength="12" maxlength="128" autocomplete="new-password" />
+            <button class="button button-primary button-wide" type="submit" id="resetPasswordBtn">Reset password</button>
+          </div>
+        </form>
+        <p class="switch"><a id="backToLoginLink" href="#login">Back to sign in</a></p>
+      </section>
+
+      <!-- Shown after signing in with an administrator-issued temporary password yarn?-->
+      <section id="changePasswordPanel" hidden>
+        <p class="eyebrow">FIRST SIGN-IN</p>
+        <h1>Choose your password</h1>
+        <p class="sub">You signed in with a temporary password. Choose your own to continue.</p>
+        <form id="changePasswordForm">
+          <label for="newPassword">New password <span class="optional">12+ characters, uppercase and number</span></label>
+          <input type="password" id="newPassword" required minlength="12" maxlength="128" autocomplete="new-password" />
+          <label for="confirmNewPassword">Confirm new password</label>
+          <input type="password" id="confirmNewPassword" required minlength="12" maxlength="128" autocomplete="new-password" />
+          <button class="button button-primary button-wide" type="submit" id="changePasswordBtn">Save password and continue</button>
+        </form>
+        <p class="switch"><a id="changeCancelLink" href="#signout">Sign out</a></p>
+      </section>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>initLogin();</script>
+  <script src="../assets/js/role-guard.js"></script>
+  <script>RoleGuard.redirectIfLoggedIn();</script>
+</body>
+</html>
