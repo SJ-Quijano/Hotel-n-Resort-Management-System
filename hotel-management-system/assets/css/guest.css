@@ -9,15 +9,66 @@
   --sans:"Jost",system-ui,"Segoe UI",Roboto,sans-serif;
 }
 *{box-sizing:border-box}
-body.guest{margin:0;font-family:var(--sans);font-size:16px;line-height:1.55;background:var(--bg);color:var(--ink);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:.005em}
+body.guest{
+  margin:0;
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  background:var(--bg);
+  color:var(--ink);
+  display:flex;
+  min-height:100vh;-webkit-font-smoothing:antialiased
+}
+h1,h2,h3{
+  font-family:var(--serif);
+  font-weight:600;
+  letter-spacing:.005em
+}
 
 /* ---------- Sidebar ---------- */
-.sidebar{width:264px;background:linear-gradient(180deg,var(--night),var(--night-2));color:#c4d3d0;padding:28px 16px 20px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;flex-shrink:0}
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:600;font-size:26px;line-height:1;padding:0 12px 26px;margin-bottom:14px;color:#fff;border-bottom:1px solid rgba(217,191,142,.2)}
-.brand-mark{width:36px;height:36px;border-radius:50%;border:1px solid var(--brass);display:grid;place-items:center;color:var(--brass-l);font-size:19px;font-weight:600}
-.sidebar nav{display:flex;flex-direction:column;gap:4px;flex:1}
-.nav-btn{position:relative;display:flex;align-items:center;gap:13px;background:none;border:0;color:inherit;text-align:left;padding:11px 14px;border-radius:10px;font:400 15.5px/1.2 var(--sans);cursor:pointer;text-decoration:none;transition:background .15s,color .15s}
+.sidebar{
+  width:264px;
+  background:linear-gradient(180deg,var(--night),var(--night-2));
+  color:#c4d3d0;
+  padding:28px 16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  position:sticky;
+  top:0;height:100vh;
+  flex-shrink:0
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:26px;
+  line-height:1;
+  padding:0 12px 26px;
+  margin-bottom:14px;
+  color:#fff;
+  border-bottom:1px solid rgba(217,191,142,.2)
+}
+.brand-mark{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid var(--brass);
+  display:grid;
+  place-items:center;
+  color:var(--brass-l);
+  font-size:19px;
+  font-weight:600
+}
+.sidebar nav{
+  display:flex;
+  flex-direction:column;
+  gap:4px;flex:1
+}
+.nav-btn{
+  position:relative;display:flex;align-items:center;gap:13px;background:none;border:0;color:inherit;text-align:left;padding:11px 14px;border-radius:10px;font:400 15.5px/1.2 var(--sans);cursor:pointer;text-decoration:none;transition:background .15s,color .15s}
 .nav-btn .ico{width:18px;height:18px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
 .nav-btn:hover{background:rgba(255,255,255,.06);color:#fff}
 .nav-btn.active{background:rgba(217,191,142,.12);color:#fff}
