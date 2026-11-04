@@ -8,6 +8,11 @@
   <title>LUNARA | Book your stay</title>
   <link rel="stylesheet" href="../assets/css/Booking.css" />
   <link rel="stylesheet" href="../assets/css/Base.css" />
+  <style>
+    .booking-field-hint { display: block; margin-top: 4px; font-size: 13px; opacity: .7; }
+    #redirectNote { margin: 14px 0 6px; opacity: .8; }
+    .booking-complete .booking-confirm-mark { font-size: 44px; }
+  </style>
 </head>
 <body class="booking-page">
   <header class="booking-header">
@@ -80,15 +85,18 @@
         <p class="eyebrow">STEP 2 · GUEST DETAILS</p>
         <h2 id="guestTitle">Who’s staying with us?</h2>
         <p class="booking-help">These details will be used for your reservation.</p>
+        <p class="booking-help" id="visitorNote" hidden>You’re booking without an account. <a href="index.html?next=book.html">Have an account? Sign in</a> to fill these in for you.</p>
+        <p class="booking-help" id="memberNote" hidden>You’re signed in, so we’ll use the email on your account.</p>
         <form id="guestForm">
           <div class="booking-fields">
             <div>
               <label for="guestName">Full name</label>
               <input id="guestName" name="guestName" type="text" autocomplete="name" maxlength="120" required />
             </div>
-            <div>
+            <div id="guestEmailField">
               <label for="guestEmail">Email address</label>
-              <input id="guestEmail" name="guestEmail" type="email" autocomplete="email" maxlength="254" readonly />
+              <input id="guestEmail" name="guestEmail" type="text" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" readonly />
+              <small class="booking-field-hint">So we can reach you about your booking</small>
             </div>
             <div>
               <label for="guestPhone">Phone number</label>
@@ -147,7 +155,9 @@
         <p class="eyebrow">YOUR STAY IS RESERVED</p>
         <h2>We can’t wait to welcome you.</h2>
         <p id="confirmationDetails"></p>
+        <p id="redirectNote" role="status" aria-live="polite"></p>
         <a class="button button-primary" href="guest-dashboard.html">Back to Harbor &amp; Pine</a>
+        <button class="button button-outline" type="button" id="stayHere" hidden>Stay on this page</button>
       </section>
     </div>
   </main>

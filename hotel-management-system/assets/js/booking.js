@@ -47,6 +47,38 @@ function showBookingStep(name) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// After a booking the guest sees the check mark, then is taken back home automatically.
+// A visitor goes to the home page; a signed-in guest goes to their own dashboard.
+const RETURN_HOME_SECONDS = 8;
+let returnTimer = null;
+
+function stopReturnCountdown() {
+  if (returnTimer) window.clearInterval(returnTimer);
+  returnTimer = null;
+  const note = document.getElementById("redirectNote");
+  note.textContent = "";
+  document.getElementById("stayHere").hidden = true;
+}
+
+function startReturnCountdown() {
+  const note = document.getElementById("redirectNote");
+  const destination = document.querySelector("#stepComplete a.button");
+  const where = bookingState.user ? "your dashboard" : "the home page";
+  let left = RETURN_HOME_SECONDS;
+  document.getElementById("stayHere").hidden = false;
+  note.textContent = `Taking you back to ${where} in ${left} seconds…`;
+  returnTimer = window.setInterval(() => {
+    left -= 1;
+    if (left <= 0) {
+      window.clearInterval(returnTimer);
+      returnTimer = null;
+      window.location.assign(destination.href);
+      return;
+    }
+    note.textContent = `Taking you back to ${where} in ${left} ${left === 1 ? "second" : "seconds"}…`;
+  }, 1000);
+}
+
 function addBookingSummaryRow(list, label, value, className = "") {
   const wrapper = document.createElement("div");
   wrapper.className = `booking-summary-row${className ? ` ${className}` : ""}`;
@@ -143,10 +175,10 @@ function renderAvailableRooms(rooms, results) {
     choose.textContent = "Choose this room";
     choose.addEventListener("click", () => {
       bookingState.room = room;
-      const { user } = bookingState;
-      document.getElementById("guestName").value = user?.user_metadata?.full_name || "";
-      document.getElementById("guestEmail").value = user?.email || "";
-      document.getElementById("guestPhone").value = user?.user_metadata?.phone || "";
+      const { user, contact } = bookingState;
+      document.getElementById("guestName").value = contact?.fullName || user?.user_metadata?.full_name || "";
+      document.getElementById("guestEmail").value = user?.email || contact?.email || "";
+      document.getElementById("guestPhone").value = contact?.phone || user?.user_metadata?.phone || "";
       showBookingStep("guest");
     });
     card.append(roomName, number, capacity, rate, choose);
@@ -158,6 +190,7 @@ function renderAvailableRooms(rooms, results) {
 async function initBookingPage() {
   const { data, error } = await sb.auth.getSession();
   if (error) {
+    document.getElementById("bookingApp").hidden = false;
     showBookingStatus(`Unable to check your sign-in: ${error.message}`);
     return;
   }
@@ -177,13 +210,22 @@ if (bookingState.user) {
   }
 } else if (doneLink) {
   doneLink.href = "home.html";
+  doneLink.textContent = "Back to home";
 }
   document.getElementById("bookingApp").hidden = false;
   const guestEmail = document.getElementById("guestEmail");
-  if (!bookingState.user) {
+  if (bookingState.user) {
+    // Signed in: the account's email is used, so there is nothing to type.
+    guestEmail.readOnly = true;
+    document.getElementById("guestEmailField").hidden = true;
+    document.getElementById("memberNote").hidden = false;
+  } else {
+    // Booking without an account: the customer types a contact email and we keep it as typed.
     guestEmail.readOnly = false;
     guestEmail.required = true;
+    document.getElementById("visitorNote").hidden = false;
   }
+  document.getElementById("stayHere").addEventListener("click", stopReturnCountdown);
   const checkIn = document.getElementById("checkIn");
   const checkOut = document.getElementById("checkOut");
   checkIn.min = localDateOffset(0);
@@ -264,8 +306,21 @@ if (bookingState.user) {
     const fullName = document.getElementById("guestName").value.trim();
     const email = document.getElementById("guestEmail").value.trim();
     const phone = document.getElementById("guestPhone").value.trim();
-    if (fullName.length < 2 || !document.getElementById("guestEmail").reportValidity() || phone.length < 5) {
-      showBookingStatus("Enter a valid name, email address, and phone number.");
+    let problem = "";
+    let focusId = "";
+    if (fullName.length < 2) {
+      problem = "Enter your full name.";
+      focusId = "guestName";
+    } else if (!bookingState.user && !email) {
+      problem = "Enter your email address.";
+      focusId = "guestEmail";
+    } else if (phone.length < 5) {
+      problem = "Enter a phone number we can reach you on.";
+      focusId = "guestPhone";
+    }
+    if (problem) {
+      showBookingStatus(problem);
+      document.getElementById(focusId).focus();
       return;
     }
     bookingState.contact = {
@@ -315,14 +370,30 @@ if (bookingState.user) {
       const confirmation = document.getElementById("confirmationDetails");
       confirmation.textContent = `Your reservation reference is ${reservationId}. ${bookingState.room.room_type} · Room ${bookingState.room.room_number}, ${formatBookingDate(bookingState.search.checkIn)} to ${formatBookingDate(bookingState.search.checkOut)}. Payment is due at the property.`;
       showBookingStep("complete");
+      startReturnCountdown();
     } catch (bookingError) {
-      showBookingStatus(`We couldn’t complete the booking: ${bookingError.message}`);
+      const text = bookingError.message || "";
       button.disabled = false;
       button.textContent = "Complete booking";
+      const detailIssues = [
+        [/email/i, "guestEmail", "The booking system could not accept that email address. Please check it and try again."],
+        [/valid guest name/i, "guestName", "Please enter your full name."],
+        [/contact phone/i, "guestPhone", "Please enter a phone number we can reach you on."]
+      ];
+      const issue = detailIssues.find(([pattern]) => pattern.test(text));
+      if (issue) {
+        // Send the guest back to the details step instead of leaving them on the last page.
+        showBookingStep("guest");
+        showBookingStatus(issue[2]);
+        document.getElementById(issue[1]).focus();
+        return;
+      }
+      showBookingStatus(`We couldn’t complete the booking: ${text}`);
     }
   });
 }
 
 initBookingPage().catch((error) => {
+  document.getElementById("bookingApp").hidden = false;
   showBookingStatus(`Booking page failed to load: ${error.message}`);
 });
