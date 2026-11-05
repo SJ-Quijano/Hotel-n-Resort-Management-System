@@ -9,9 +9,9 @@ const PAID_PAYMENT_STATUSES = ["completed", "paid", "succeeded"];
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const money = (n) => new Intl.NumberFormat(undefined, {
+const money = (n) => new Intl.NumberFormat("en-PH", {
   style: "currency",
-  currency: typeof CURRENCY_CODE !== "undefined" ? CURRENCY_CODE : "USD"
+  currency: "PHP"
 }).format(Number(n || 0));
 const parseDate = (d) => new Date(`${d}T00:00:00`);
 const fmtDate = (d) => (d ? parseDate(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "-");
@@ -86,7 +86,7 @@ async function load() {
 }
 
 /* ---------- derived helpers ---------- */
-const rate = (t) => Number(t.nightly_rate ?? t.base_rate ?? 0);
+const rate = (t) => Number(t.nightly_rate) || Number(t.base_rate) || 0;
 const resById = (id) => state.reservations.find((r) => r.id === id);
 const invoiceFor = (res) => state.invoices.find((i) => i.reservation_id === res.id);
 const paidOn = (inv) => state.payments

@@ -10,7 +10,7 @@ body.home-page { background: #eceae5; }
     padding: 54px clamp(18px,4vw,42px) 108px; 
     color: #fff; 
     background: linear-gradient(90deg, rgba(10,30,39,.72), rgba(10,30,39,.3) 56%, rgba(10,30,39,.05)), 
-    url("https://images.unsplash.com/photo-1660061540551-0955e8ec5b8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D");
+    url("https://images.unsplash.com/photo-1678913308053-316cee77afe9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D");
     background-position: center, center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -167,7 +167,7 @@ body.home-page { background: #eceae5; }
 .stay-image {
    width: 69%; 
    min-height: 520px;
-    background: url("https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1500&q=85") center / cover; 
+    background: url("https://images.unsplash.com/photo-1678912128919-b69e9e855c00?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D") center / cover; 
 }
 /* White card sitting on top of the photo */
 .stay-card {
