@@ -12,7 +12,10 @@ function localDateOffset(days) {
 }
 
 function bookingCurrency(value) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: CURRENCY_CODE }).format(Number(value));
+  return new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP"
+  }).format(Number(value));
 }
 
 function showBookingStatus(message, type = "error") {
@@ -186,7 +189,6 @@ function renderAvailableRooms(rooms, results) {
   });
   results.append(heading, cards);
 }
-
 async function initBookingPage() {
   const { data, error } = await sb.auth.getSession();
   if (error) {
