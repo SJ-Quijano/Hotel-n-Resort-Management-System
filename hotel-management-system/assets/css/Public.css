@@ -3,148 +3,442 @@
 .home-page, .public-body { background: #f3f1ec; }
 
 /* Dark navy bar at the top of public pages */
-.site-header { position: relative; z-index: 1; padding: 12px clamp(18px,3vw,42px); background: var(--header-bg); }
+.site-header { 
+  position: relative; 
+  z-index: 1;
+  padding: 12px clamp(18px,3vw,42px); 
+  background: var(--header-bg); 
+}
+
 /* Lines up logo, menu and buttons in one row, max 1280px wide */
-.site-header-inner { display: flex; max-width: 1280px; align-items: center; flex-wrap: wrap; gap: 18px; margin: auto; }
+.site-header-inner { 
+  display: flex; 
+  max-width: 1280px; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  gap: 18px; 
+  margin: auto; 
+}
 /* Logo in the public header/footer (white, small) */
-.brand-home { order: 1; color: #fff; gap: 10px; font-size: .72rem; letter-spacing: .12em; }
+.brand-home { 
+  order: 1; 
+  color: #fff; 
+  gap: 10px; 
+  font-size: .72rem; 
+  letter-spacing: .12em; 
+}
 /* Gold 'H' square in the public header/footer */
-.brand-home .brand-mark { width: 32px; height: 32px; border-color: rgba(255,255,255,.9); color: var(--gold-soft); font-size: 1.25rem; }
+.brand-home .brand-mark { 
+  width: 32px; 
+  height: 32px; 
+  border-color: rgba(255,255,255,.9); 
+  color: var(--gold-soft); 
+  font-size: 1.25rem; 
+}
 /* 'HOTEL & RESORT' text under the logo name */
-.brand-home small { color: rgba(255,255,255,.72); font-size: .54rem; }
+.brand-home small { 
+  color: rgba(255,255,255,.72); 
+  font-size: .54rem; 
+}
 /* Menu links row (Home, About Us, Rooms) */
-.site-nav { display: flex; order: 2; align-items: center; gap: 24px; margin-left: 14px; }
+.site-nav { 
+  display: flex; 
+  order: 2; 
+  align-items: center; 
+  gap: 24px; 
+  margin-left: 14px; 
+}
 /* Each menu link: soft white text, no underline */
-.site-nav a { color: rgba(255,255,255,.78); text-decoration: none; font-size: .76rem; font-weight: 500; }
+.site-nav a { 
+  color: rgba(255,255,255,.78); 
+  text-decoration: none; 
+  font-size: .76rem; 
+  font-weight: 500; 
+}
 /* Menu link turns bright white on hover and for the page you are on */
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: #fff; }
 /* Right side of header: Log in, Contact, Book now */
-.site-actions { display: flex; align-items: center; order: 3; gap: 12px; margin-left: auto; }
+.site-actions { 
+  display: flex; 
+  align-items: center; 
+  order: 3; gap: 12px; 
+  margin-left: auto; 
+}
 /* A small icon + text link (Log in / Contact) */
-.site-action { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.82); text-decoration: none; font-size: .74rem; }
+.site-action {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  color: rgba(255,255,255,.82); 
+  text-decoration: none; 
+  font-size: .74rem; 
+}
 /* Gold on hover */
-.site-action:hover { color: var(--gold-soft); }
+.site-action:hover { 
+  color: var(--gold-soft); }
 /* The little icon (person / envelope) next to the text */
-.site-action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.site-action svg { 
+  width: 17px; 
+  height: 17px; 
+  fill: none; 
+  stroke: currentColor; 
+  stroke-linecap: round; 
+  stroke-linejoin: round; 
+  stroke-width: 1.5; 
+}
 /* Gold 'Book now' button base size and text */
-.book-button { min-width: 116px; min-height: 36px; border-radius: 6px; background: var(--gold-soft); color: #123040; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.book-button { 
+  min-width: 116px; 
+  min-height: 36px; 
+  border-radius: 6px; 
+  background: var(--gold-soft); 
+  color: #123040; 
+  font-size: .72rem; 
+  letter-spacing: .04em; 
+  text-transform: uppercase; 
+}
 /* Keeps Book now gold with dark text (beats the navy main-button style) */
-.book-button, .button-primary.book-button { background: var(--gold-soft); color: #123040; }
+.book-button, .button-primary.book-button { 
+  background: var(--gold-soft); 
+  color: #123040; 
+}
 /* Book now stays gold, slightly lighter, on hover */
-.book-button:hover:not(:disabled), .button-primary.book-button:hover:not(:disabled) { background: #f4dca4; color: #123040; }
+.book-button:hover:not(:disabled), .button-primary.book-button:hover:not(:disabled) {
+  background: #f4dca4; 
+  color: #123040; 
+}
 /* Gold outline for keyboard users on menu links */
-.site-nav a:focus-visible, .site-action:focus-visible { outline: 3px solid rgba(240,207,136,.7); outline-offset: 3px; }
+.site-nav a:focus-visible, .site-action:focus-visible { 
+  outline: 3px solid rgba(240,207,136,.7); 
+  outline-offset: 3px; 
+}
 
 /* Cream button used on the home hero ('Discover your stay') */
-.button-light { min-height: 42px; padding: 0 20px; gap: 20px; border-radius: 10px; color: #143448; background: #f4dca4; font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; }
+.button-light { 
+  min-height: 42px; 
+  padding: 0 20px; 
+  gap: 20px; 
+  border-radius: 10px; 
+  color: #143448; 
+  background: #f4dca4; 
+  font-size: .74rem; 
+  letter-spacing: .04em; 
+  text-transform: uppercase; 
+}
 /* Turns white on hover */
 .button-light:hover { background: #fff; }
 /* Uppercase text link with an arrow ('Explore a stay →', footer link) */
-.text-link, .site-footer > a:last-child { display: inline-flex; align-items: center; gap: 14px; color: var(--navy); text-decoration: none; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.text-link, .site-footer > a:last-child { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 14px; color: var(--navy); 
+  text-decoration: none; 
+  font-size: .75rem; 
+  font-weight: 700; 
+  letter-spacing: .08em; 
+  text-transform: uppercase; 
+}
 
 /* Dark navy footer bar: logo, tagline, link */
-.site-footer { display: flex; min-height: 135px; align-items: center; justify-content: space-between; gap: 20px; padding: 25px clamp(28px,8vw,125px); color: #fff; background: var(--navy); }
+.site-footer { 
+  display: flex; 
+  min-height: 135px; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 20px; 
+  padding: 25px clamp(28px,8vw,125px); 
+  color: #fff; 
+  background: var(--navy); 
+}
 /* Footer logo subtitle colour */
 .site-footer .brand-home small { color: #a8b8bf; }
 /* Italic tagline in the footer */
-.site-footer > p { color: #b6c1c3; font: italic 1rem var(--serif); }
+.site-footer > p { 
+  color: #b6c1c3; 
+  font: italic 1rem var(--serif); 
+}
 /* Footer link colour (gold-cream) */
 .site-footer > a:last-child { color: #e2c89f; }
 /* Footer link turns gold on hover */
 .site-footer > a:last-child:hover { color: var(--gold); }
 
 /* Small uppercase line above big hero headings */
-.hero-kicker { margin: 0 0 14px; color: #e2c89f; font-size: .68rem; font-weight: 700; letter-spacing: .16em; }
+.hero-kicker { 
+  margin: 0 0 14px; 
+  color: #e2c89f; 
+  font-size: .68rem; 
+  font-weight: 700; 
+  letter-spacing: .16em; 
+}
 /* Main area of a public page, at least 55% screen tall */
 .public-page { min-height: 55vh; }
 /* Big photo banner at the top of inner pages (used by About) */
-.public-page-hero { display: flex; min-height: 400px; flex-direction: column; justify-content: center; padding: 65px clamp(28px,12vw,190px); color: #fff; background: linear-gradient(90deg, rgba(10,30,39,.72), rgba(10,30,39,.16)), url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1800&q=85") center 48% / cover; }
+.public-page-hero { 
+  display: flex; 
+  min-height: 400px; 
+  flex-direction: column; 
+  justify-content: center; 
+  padding: 65px clamp(28px,12vw,190px); 
+  color: #fff; 
+  background: linear-gradient(90deg, rgba(10,30,39,.72), rgba(10,30,39,.16)), 
+  url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1800&q=85") center 48% / cover; }
 /* Large white heading in that banner */
-.public-page-hero h1 { margin: 0; font: 500 clamp(2.8rem,6vw,5rem)/1.08 var(--serif); }
+.public-page-hero h1 { 
+  margin: 0; 
+  font: 500 clamp(2.8rem,6vw,5rem)/1.08 var(--serif); 
+}
 /* Gold italic words inside that heading */
-.public-page-hero h1 em { color: #d7b77e; font-weight: 500; }
+.public-page-hero h1 em { 
+  color: #d7b77e; 
+  font-weight: 500; 
+}
 
 /* Room cards + detail dialog (used on home AND rooms) */
 /* Section holding the room cards (used on home and rooms) */
-.rooms-section { max-width: 1280px; margin: auto; padding: 105px 35px 118px; }
+.rooms-section { 
+  max-width: 1280px; 
+  margin: auto; 
+  padding: 105px 35px 118px; 
+}
 /* Title row above the room cards: heading left, paragraph right */
-.rooms-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+.rooms-heading { 
+  display: flex; 
+  align-items: flex-end; 
+  justify-content: space-between; 
+  gap: 24px; 
+  margin-bottom: 30px; }
 /* Darker gold for the small label on a light background */
-.rooms-heading .eyebrow { color: var(--gold-dark); }
+.rooms-heading .eyebrow { 
+  color: var(--gold-dark); 
+}
 /* Big navy heading above the room cards */
-.rooms-heading h1, .rooms-heading h2 { margin: 0; color: var(--navy); font: 500 clamp(2.3rem,4vw,3.55rem)/1.15 var(--serif); }
+.rooms-heading h1, .rooms-heading h2 { 
+  margin: 0; 
+  color: var(--navy); 
+  font: 500 clamp(2.3rem,4vw,3.55rem)/1.15 var(--serif); 
+}
 /* Gold highlighted word in that heading */
-.rooms-heading em { color: var(--gold-dark); font-weight: 500; }
+.rooms-heading em { 
+  color: var(--gold-dark); 
+  font-weight: 500; 
+}
 /* Grey paragraph beside the heading */
-.rooms-heading > p { max-width: 520px; margin: 0 0 4px; color: #596f7a; font-size: .88rem; line-height: 1.8; }
+.rooms-heading > p { 
+  max-width: 520px; 
+  margin: 0 0 4px; 
+  color: #596f7a; 
+  font-size: .88rem; 
+  line-height: 1.8; 
+}
 /* Grid that arranges room cards in columns automatically */
-.public-room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px,1fr)); gap: 18px; }
+.public-room-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(245px,1fr)); 
+  gap: 18px; 
+}
 /* 'Loading room types...' / error message inside the grid */
-.room-list-status { grid-column: 1/-1; margin: 0; padding: 28px; color: var(--muted); background: #f3f1eb; text-align: center; }
+.room-list-status { 
+  grid-column: 1/-1; 
+  margin: 0; 
+  padding: 28px; 
+  color: var(--muted); 
+  background: #f3f1eb; 
+  text-align: center; 
+}
 /* Red version when loading fails */
-.room-list-status.error { color: var(--danger); background: #fcf0ee; }
+.room-list-status.error { 
+  color: var(--danger); 
+  background: #fcf0ee; 
+}
 /* One room card (white, rounded, soft shadow) */
-.public-room-card { display: block; overflow: hidden; padding: 0; border: 1px solid rgba(19,50,77,.09); border-radius: 12px; color: inherit; background: #fff; text-align: left; box-shadow: 0 12px 20px rgba(16,35,48,.05); transition: transform .2s ease, box-shadow .2s ease; }
+.public-room-card { 
+  display: block; 
+  overflow: hidden; 
+  padding: 0; 
+  border: 1px solid rgba(19,50,77,.09); 
+  border-radius: 12px; 
+  color: inherit; 
+  background: #fff; 
+  text-align: left; 
+  box-shadow: 0 12px 20px rgba(16,35,48,.05); 
+  transition: transform .2s ease, box-shadow .2s ease; 
+}
 /* Card lifts up a little on hover */
-.public-room-card:hover { box-shadow: 0 16px 38px rgba(18,43,58,.12); transform: translateY(-4px); }
+.public-room-card:hover { 
+  box-shadow: 0 16px 38px rgba(18,43,58,.12); 
+  transform: translateY(-4px); 
+}
 /* Gold outline for keyboard users on cards and the close button */
-.public-room-card:focus-visible, .room-detail-close:focus-visible { outline: 3px solid rgba(196,154,90,.55); outline-offset: 3px; }
+.public-room-card:focus-visible, .room-detail-close:focus-visible { 
+  outline: 3px solid rgba(196,154,90,.55); 
+  outline-offset: 3px; 
+}
 /* Picture area at the top of a room card */
-.room-art { position: relative; height: 180px; overflow: hidden; background-color: #d7d4ca; }
+.room-art { 
+  position: relative; 
+  height: 180px; 
+  overflow: hidden; 
+  background-color: #d7d4ca; 
+}
 /* Room photo fills the picture area */
-.room-art img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.room-art img { 
+  display: block; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform .35s ease; 
+}
 /* Photo zooms in slightly on hover */
 .public-room-card:hover .room-art img { transform: scale(1.04); }
 /* Green-grey colour shown when room 1 has no photo */
-.room-art--1 { background: linear-gradient(155deg,#d9e3df,#a4b8b2 48%,#748e8e); }
+.room-art--1 { 
+  background: linear-gradient(155deg,#d9e3df,#a4b8b2 48%,#748e8e); 
+}
 /* Sand colour shown when room 2 has no photo */
-.room-art--2 { background: linear-gradient(155deg,#e8dfd1,#c8b49b 48%,#8c7564); }
+.room-art--2 { 
+  background: linear-gradient(155deg,#e8dfd1,#c8b49b 48%,#8c7564); 
+}
 /* Blue-grey colour shown when room 3 has no photo */
-.room-art--3 { background: linear-gradient(155deg,#d9e3e7,#a2b9c1 48%,#6f8995); }
+.room-art--3 { 
+  background: linear-gradient(155deg,#d9e3e7,#a2b9c1 48%,#6f8995); 
+}
 /* Text area under the photo in a room card */
 .public-room-copy { padding: 16px 14px 18px; }
 /* Room name */
-.public-room-copy h3 { margin: 0; color: var(--navy); font: 600 1.1rem var(--serif); }
+.public-room-copy h3 { 
+  margin: 0; 
+  color: var(--navy); 
+  font: 600 1.1rem var(--serif); 
+}
 /* Short room description */
-.public-room-copy p { min-height: 42px; margin: 8px 0 14px; color: #667d88; font-size: .81rem; line-height: 1.6; }
+.public-room-copy p { 
+  min-height: 42px; 
+  margin: 8px 0 14px; 
+  color: #667d88; 
+  font-size: .81rem; 
+  line-height: 1.6; 
+}
 /* Bottom row of the card: guests and price */
-.public-room-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(18,50,77,.08); color: #65757a; font-size: .75rem; }
+.public-room-meta { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 10px; 
+  padding-top: 12px; 
+  border-top: 1px solid rgba(18,50,77,.08); 
+  color: #65757a; 
+  font-size: .75rem; }
 /* Price in bold navy */
-.public-room-meta strong { color: var(--navy); font-size: .9rem; }
+.public-room-meta strong { 
+  color: var(--navy); 
+  font-size: .9rem; 
+}
 /* Button inside a room card is full width */
-.public-room-card .button { width: 100%; margin-top: 12px; border-radius: 8px; }
+.public-room-card .button { 
+  width: 100%; 
+  margin-top: 12px; 
+  border-radius: 8px; 
+}
+
 
 /* Pop-up window that opens when you click a room */
-.room-detail-dialog { position: fixed; width: min(920px, calc(100% - 32px)); max-width: none; max-height: min(780px, calc(100% - 32px)); overflow: auto; padding: 0; border: 0; color: var(--ink); background: #fbfaf7; box-shadow: 0 24px 80px rgba(0,0,0,.28); }
+.room-detail-dialog { 
+  position: fixed; 
+  width: min(920px, calc(100% - 32px)); 
+  max-width: none; 
+  max-height: min(780px, calc(100% - 32px)); 
+  overflow: auto; 
+  padding: 0; 
+  border: 0; 
+  color: var(--ink); 
+  background: #fbfaf7; 
+  box-shadow: 0 24px 80px rgba(0,0,0,.28); 
+}
 /* When open: photo on the left, details on the right */
-.room-detail-dialog[open] { display: grid; grid-template-columns: 1.05fr .95fr; }
+.room-detail-dialog[open] { 
+  display: grid; 
+  grid-template-columns: 1.05fr .95fr; 
+}
 /* Dark blurred background behind the pop-up */
-.room-detail-dialog::backdrop { background: rgba(10,25,32,.68); backdrop-filter: blur(3px); }
+.room-detail-dialog::backdrop { 
+  background: rgba(10,25,32,.68); 
+  backdrop-filter: blur(3px); 
+}
 /* Big photo area in the pop-up */
 .room-detail-dialog .room-detail-art { min-height: 510px; }
 /* Details column in the pop-up */
-.room-detail-copy { align-self: center; padding: clamp(25px,5vw,52px); }
+.room-detail-copy { 
+  align-self: center; 
+  padding: clamp(25px,5vw,52px); 
+}
 /* Room name heading in the pop-up */
-.room-detail-copy h2 { margin: 0 0 17px; color: var(--navy); font: 600 clamp(1.8rem,3vw,2.6rem)/1.15 var(--serif); }
+.room-detail-copy h2 {
+  margin: 0 0 17px; 
+  color: var(--navy); 
+  font: 600 clamp(1.8rem,3vw,2.6rem)/1.15 var(--serif);
+}
 /* Room description in the pop-up */
-.room-detail-description { color: #66757a; font-size: .9rem; line-height: 1.8; }
+.room-detail-description { 
+  color: #66757a; 
+  font-size: .9rem; 
+  line-height: 1.8; 
+}
 /* List of facts (max guests, rate) with divider lines */
-.room-detail-facts { margin: 25px 0; border-top: 1px solid var(--line); }
+.room-detail-facts { 
+  margin: 25px 0; 
+  border-top: 1px solid var(--line); 
+}
 /* One fact row: label left, value right */
-.room-detail-facts div { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: .83rem; }
+.room-detail-facts div { 
+  display: flex; 
+  justify-content: space-between; 
+  gap: 16px; padding: 13px 0; 
+  border-bottom: 1px solid var(--line); 
+  font-size: .83rem; 
+}
 /* Fact label (grey) */
 .room-detail-facts dt { color: var(--muted); }
 /* Fact value (bold navy) */
-.room-detail-facts dd { margin: 0; color: var(--navy); font-weight: 700; text-align: right; }
+.room-detail-facts dd { 
+  margin: 0; color: var(--navy); 
+  font-weight: 700; 
+  text-align: right; 
+}
 /* Round X button at top-right of the pop-up */
-.room-detail-close { position: absolute; top: 13px; right: 13px; z-index: 2; display: grid; width: 38px; height: 38px; place-items: center; border: 0; border-radius: 50%; color: var(--navy); background: rgba(255,255,255,.92); font-size: 1.6rem; line-height: 1; }
+.room-detail-close { 
+  position: absolute; 
+  top: 13px; 
+  right: 13px; 
+  z-index: 2; 
+  display: grid; 
+  width: 38px; 
+  height: 38px; 
+  place-items: center; 
+  border: 0; 
+  border-radius: 50%; 
+  color: var(--navy);
+   background: rgba(255,255,255,.92); 
+   font-size: 1.6rem; 
+   line-height: 1; 
+}
 
 /* Tablets/phones (760px wide or less): */
 @media (max-width: 760px) {
   /* Logo and buttons spread across the row */
-  .site-header-inner { justify-content: space-between; gap: 10px; }
+  .site-header-inner { 
+    justify-content: space-between; 
+    gap: 10px; 
+  }
   /* Menu drops to its own full-width row under the logo */
-  .site-nav { order: 3; width: 100%; margin-left: 0; padding-top: 8px; gap: 22px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,.12); }
+  .site-nav { 
+    order: 3; 
+    width: 100%; 
+    margin-left: 0; 
+    padding-top: 8px;
+    gap: 22px; 
+    flex-wrap: wrap; 
+    border-top: 1px solid rgba(255,255,255,.12); 
+  }
   /* Right buttons no longer pushed to the far right */
   .site-actions { margin-left: 0; }
   /* Hide the words 'Log in' / 'Contact', keep only the icons */
@@ -152,24 +446,45 @@
   /* On small screens: section holding the room cards (used on home and rooms) */
   .rooms-section { padding: 78px 28px; }
   /* Heading and paragraph stack on top of each other */
-  .rooms-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .rooms-heading { 
+    align-items: flex-start; 
+    flex-direction: column; 
+    gap: 14px; 
+  }
   /* Shorter banner, smaller padding */
-  .public-page-hero { min-height: 340px; padding: 50px 35px; }
+  .public-page-hero { 
+    min-height: 340px; 
+    padding: 50px 35px; 
+  }
   /* Footer items wrap onto several lines */
-  .site-footer { flex-wrap: wrap; padding: 32px 28px; }
+  .site-footer { 
+    flex-wrap: wrap; 
+    padding: 32px 28px; 
+  }
 }
 /* Small phones (520px wide or less): */
 @media (max-width: 520px) {
   /* Smaller header padding */
   .site-header { padding: 10px 15px; }
   /* On small screens: logo in the public header/footer (white, small) */
-  .brand-home { gap: 7px; font-size: .66rem; }
+  .brand-home { 
+    gap: 7px; 
+    font-size: .66rem; 
+  }
   /* Slightly larger H square so it is easy to tap */
-  .brand-home .brand-mark { width: 36px; height: 36px; }
+  .brand-home .brand-mark { 
+    width: 36px; 
+    height: 36px; 
+  }
   /* On small screens: section holding the room cards (used on home and rooms) */
-  .rooms-section { padding: 68px 24px; }
+  .rooms-section { 
+    padding: 68px 24px; 
+  }
   /* Shorter banner, smaller padding */
-  .public-page-hero { min-height: 300px; padding: 38px 24px; }
+  .public-page-hero { 
+    min-height: 300px; 
+    padding: 38px 24px; 
+  }
   /* Room cards stack in ONE column */
   .public-room-grid { grid-template-columns: 1fr; }
   /* Pop-up stacks photo above details instead of side by side */
@@ -179,5 +494,8 @@
   /* On small screens: details column in the pop-up */
   .room-detail-copy { padding: 25px; }
   /* Footer tagline takes its own full line */
-  .site-footer > p { width: 100%; margin: 0; }
+  .site-footer > p {
+   width: 100%; 
+   margin: 0; 
+}
 }

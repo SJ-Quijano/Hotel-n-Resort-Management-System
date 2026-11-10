@@ -565,7 +565,7 @@ async function show(name) {
 }
 
 (async function init() {
-  if (!(await RoleGuard.require("admin"))) return;
+  if (!(await RoleGuard.require("staff", ["admin"]))) return;
   const { data: { session } } = await sb.auth.getSession();
   me = session.user;
   const { data: profile } = await sb.from("profiles").select("full_name,email").eq("id", me.id).maybeSingle();

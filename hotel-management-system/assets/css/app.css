@@ -1,143 +1,394 @@
 
 /* Dashboard layout: sidebar on the left, page on the right */
-.app-shell { display: flex; min-height: 100vh; }
+.app-shell {
+   display: flex; 
+   min-height: 100vh; 
+}
 /* Dark navy left menu that stays in place while scrolling */
-.sidebar { position: sticky; top: 0; display: flex; width: 248px; height: 100vh; flex: 0 0 248px; flex-direction: column; padding: 25px 15px 18px; color: #fff; background: var(--navy); }
+.sidebar {
+   position: sticky; 
+   top: 0; 
+   display: flex; 
+   width: 248px; 
+   height: 100vh; 
+   flex: 0 0 248px; 
+   flex-direction: column; 
+   padding: 25px 15px 18px; 
+   color: #fff; 
+   background: var(--navy); 
+}
 /* Logo spacing inside the sidebar */
-.sidebar .brand { margin: 0 8px 37px; }
+.sidebar .brand {
+   margin: 0 8px 37px; 
+}
 /* Small grey title above the menu ('WORKSPACE') */
-.nav-label { margin: 0 10px 10px; color: #8ea0a7; font-size: .64rem; font-weight: 700; letter-spacing: .17em; }
+.nav-label {
+   margin: 0 10px 10px; 
+   color: #8ea0a7; 
+   font-size: .64rem; 
+   font-weight: 700; 
+   letter-spacing: .17em; 
+}
 /* Section title inside the menu (admin menu groups) */
-.nav-heading { margin: 14px 12px 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .6; }
+.nav-heading {
+   margin: 14px 12px 4px; 
+   font-size: 11px; 
+   letter-spacing: .08em; 
+   text-transform: uppercase; 
+   opacity: .6; 
+}
 /* The menu list (filled in by JavaScript) */
-#nav { display: grid; min-height: 0; flex: 1 1 auto; gap: 4px; overflow-y: auto; align-content: start; }
+#nav {
+   display: grid; 
+   min-height: 0; 
+   flex: 1 1 auto;
+  gap: 4px; 
+  overflow-y: auto; 
+  align-content: start; 
+}
 /* One menu button */
-.nav-item { width: 100%; padding: 10px 11px; border: 0; border-radius: 5px; color: #cbd6da; background: transparent; text-align: left; font-size: .84rem; }
+.nav-item {
+   width: 100%; 
+   padding: 10px 11px; 
+   border: 0; 
+   border-radius: 5px; 
+   color: #cbd6da; 
+   background: transparent; 
+   text-align: left; 
+   font-size: .84rem; 
+}
 /* Menu button highlight on hover and for the current page */
-.nav-item:hover, .nav-item.active { color: #fff; background: rgba(255,255,255,.12); }
+.nav-item:hover, .nav-item.active {
+   color: #fff;
+   background: rgba(255,255,255,.12); 
+}
 /* Bottom of the sidebar ('Property operations') */
-.sidebar-foot { margin-top: auto; padding: 14px 8px 0; border-top: 1px solid rgba(255,255,255,.13); color: #aab9be; font-size: .72rem; }
+.sidebar-foot {
+   margin-top: auto; 
+   padding: 14px 8px 0; 
+   border-top: 1px solid rgba(255,255,255,.13); 
+   color: #aab9be; 
+   font-size: .72rem; 
+}
 /* Small green dot */
-.status-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #77c19b; }
+.status-dot {
+   display: inline-block; 
+   width: 7px; 
+   height: 7px; 
+   margin-right: 7px; 
+   border-radius: 50%; 
+   background: #77c19b; 
+}
 
 /* Right side content area */
-.main { width: 100%; max-width: 1500px; margin: 0 auto; padding: 30px clamp(18px,4vw,54px); }
+.main { 
+  width: 100%; 
+  max-width: 1500px; 
+  margin: 0 auto; 
+  padding: 30px clamp(18px,4vw,54px); 
+}
 /* Narrower page without sidebar (Team access page) */
-.standalone { max-width: 1120px; }
+.standalone {
+   max-width: 1120px;
+ }
 /* Top row: 'Good day, name' and role badge */
-.topbar { display: flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 26px; }
+.topbar {
+  display: flex; 
+  min-height: 58px; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 15px; 
+  margin-bottom: 26px; 
+}
 /* Less space under the small label in the top bar */
-.topbar .eyebrow { margin-bottom: 3px; }
+.topbar .eyebrow {
+   margin-bottom: 3px; 
+}
 /* 'Good day, ...' text */
-.who { color: var(--muted); font-size: .86rem; }
+.who {
+   color: var(--muted); 
+   font-size: .86rem; 
+  }
 /* The user name in bold */
-.who strong { color: var(--ink); font-size: 1rem; }
+.who strong {
+   color: var(--ink); 
+   font-size: 1rem; 
+  }
 /* Right side of the top bar (badge, buttons) */
-.top-actions { display: flex; align-items: center; gap: 13px; }
+.top-actions {
+   display: flex; 
+   align-items: center; 
+   gap: 13px; 
+  }
 /* Gold pill showing the role (e.g. Admin) */
-.badge { display: inline-block; padding: 6px 11px; border: 1px solid #e6d9c0; border-radius: 99px; color: #89662f; background: #f7f0e2; font-size: .73rem; font-weight: 600; text-transform: capitalize; }
+.badge {
+   display: inline-block; 
+   padding: 6px 11px; 
+   border: 1px solid #e6d9c0; 
+   border-radius: 99px; 
+   color: #89662f; 
+   background: #f7f0e2; 
+   font-size: .73rem; 
+   font-weight: 600; 
+   text-transform: capitalize; 
+  }
 
 /* Stack of panels with space between */
-.content { display: grid; gap: 18px; }
+.content { 
+  display: grid;
+  gap: 18px; 
+}
 /* White rounded card used everywhere in dashboards */
-.panel { padding: clamp(18px,3vw,28px); border: 1px solid rgba(24,49,60,.06); border-radius: 10px; background: var(--white); box-shadow: var(--shadow); }
+.panel {
+   padding: clamp(18px,3vw,28px); 
+   border: 1px solid rgba(24,49,60,.06); 
+   border-radius: 10px; 
+   background: var(--white); 
+   box-shadow: var(--shadow); 
+  }
 /* Panel heading */
-.panel h2 { margin: 0 0 8px; color: var(--navy); font: 600 1.55rem var(--serif); }
+.panel h2 {
+   margin: 0 0 8px; 
+   color: var(--navy); 
+   font: 600 1.55rem var(--serif); 
+  }
 /* Grey paragraph in a panel */
-.panel p { color: var(--muted); line-height: 1.55; font-size: .88rem; }
+.panel p { 
+  color: var(--muted); 
+  line-height: 1.55; 
+  font-size: .88rem; 
+}
 /* Heading row at the top of a panel (title left, buttons right) */
-.section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; margin-bottom: 18px; }
+.section-heading {
+   display: flex; 
+   align-items: flex-start; 
+   justify-content: space-between;
+   gap: 15px; 
+   margin-bottom: 18px; 
+  }
 /* Heading style in that row */
-.section-heading h1, .section-heading h2 { margin: 0; color: var(--navy); font: 600 1.7rem var(--serif); }
+.section-heading h1, .section-heading h2 {
+   margin: 0; 
+   color: var(--navy); 
+   font: 600 1.7rem var(--serif); 
+  }
 /* Paragraph under the heading */
-.section-heading p { margin: 7px 0 0; }
+.section-heading p { 
+  margin: 7px 0 0; 
+}
 /* Extra space above a panel */
-.section-gap { margin-top: 18px; }
+.section-gap {
+   margin-top: 18px; 
+  }
 
 /* Row of number cards that wraps automatically */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 13px; }
+.stat-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); 
+  gap: 13px; }
 /* One number card */
-.stat-card { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: #fbfbf9; }
+.stat-card {
+   padding: 18px; 
+   border: 1px solid var(--line); 
+   border-radius: 8px;
+   background: #fbfbf9; 
+  }
 /* Card label (grey) */
-.stat-card span { display: block; color: var(--muted); font-size: .78rem; }
+.stat-card span {
+   display: block; 
+   color: var(--muted); 
+   font-size: .78rem; 
+  }
 /* The big number */
-.stat-card strong { display: block; margin-top: 9px; color: var(--navy); font: 600 1.8rem var(--serif); }
+.stat-card strong {
+   display: block; 
+   margin-top: 9px; 
+   color: var(--navy); 
+   font: 600 1.8rem var(--serif); 
+  }
 /* Small note under the number */
-.stat-card small { display: block; margin-top: 6px; color: var(--muted); font-size: .72rem; line-height: 1.4; }
+.stat-card small { 
+  display: block; 
+  margin-top: 6px; 
+  color: var(--muted); 
+  font-size: .72rem; 
+  line-height: 1.4; 
+}
 /* Simple bar chart list */
-.overview-chart { display: grid; gap: 12px; }
+.overview-chart {
+   display: grid; 
+   gap: 12px; }
 /* One bar row: label, bar, value */
-.overview-chart-row { display: grid; grid-template-columns: minmax(100px,1fr) minmax(100px,3fr) minmax(72px,auto); align-items: center; gap: 12px; color: var(--muted); font-size: .78rem; }
+.overview-chart-row {
+   display: grid; 
+   grid-template-columns: minmax(100px,1fr) minmax(100px,3fr) minmax(72px,auto); 
+   align-items: center; 
+   gap: 12px; 
+   color: var(--muted); 
+   font-size: .78rem; }
 /* The value on the right */
-.overview-chart-row strong { color: var(--ink); font-size: .76rem; text-align: right; }
+.overview-chart-row strong {
+   color: var(--ink); 
+   font-size: .76rem; 
+   text-align: right; }
 /* Grey bar background */
-.overview-chart-track { height: 11px; overflow: hidden; border-radius: 99px; background: #e9ece8; }
+.overview-chart-track { 
+  height: 11px; 
+  overflow: hidden;
+   border-radius: 99px; 
+   background: #e9ece8; 
+  }
 /* Gold filled part of the bar */
-.overview-chart-bar { height: 100%; border-radius: inherit; background: var(--gold); }
+.overview-chart-bar {
+   height: 100%; 
+   border-radius: inherit; 
+   background: var(--gold); 
+  }
 
 /* Lets wide tables scroll sideways instead of breaking the page */
-.table-wrap { width: 100%; overflow-x: auto; }
+.table-wrap { 
+  width: 100%; 
+  overflow-x: auto; }
 /* Table base style */
-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .82rem; }
+table {
+   width: 100%; 
+   border-collapse: collapse;
+    text-align: left; 
+    font-size: .82rem; }
 /* Cell spacing and bottom line */
-th, td { min-width: 105px; padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th, td {
+   min-width: 105px; 
+   padding: 12px 10px; 
+   border-bottom: 1px solid var(--line); 
+   vertical-align: middle; }
 /* Table column titles (small uppercase grey) */
-th { color: var(--muted); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+th { 
+  color: var(--muted); 
+  font-size: .7rem; 
+  font-weight: 700; 
+  letter-spacing: .08em;
+   text-transform: uppercase; }
 /* Table cell text colour */
 td { color: #35484e; }
 /* No line under the last row */
-tbody tr:last-child td { border-bottom: 0; }
+tbody tr:last-child td {
+   border-bottom: 0; }
 
 /* Two-column form layout */
-.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 16px; }
+.form-grid {
+   display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr)); 
+    gap: 0 16px; }
 /* Button row and message take the full width */
-.form-grid .form-actions, .form-grid .form-message { grid-column: 1/-1; }
+.form-grid .form-actions, .form-grid .form-message {
+  grid-column: 1/-1; }
 /* Space above buttons inside a form */
-.form-grid .button { margin-top: 18px; }
+.form-grid .button {
+   margin-top: 18px; }
 /* Row of filters/search boxes or buttons */
-.toolbar { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+.toolbar { 
+  display: flex; 
+  align-items: flex-end; 
+  flex-wrap: wrap;
+   gap: 12px; 
+   margin: 18px 0; }
 /* Each filter has a minimum width */
-.toolbar > div { min-width: 160px; }
+.toolbar > div {
+   min-width: 160px; }
 /* No top space for labels in the toolbar */
-.toolbar label { margin-top: 0; }
+.toolbar label { 
+  margin-top: 0; }
 /* Input and buttons on the same row */
-.inline-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.inline-actions {
+   display: flex; 
+   flex-wrap: wrap; 
+   gap: 8px; 
+   align-items: flex-end; }
 /* Input field grows to fill the row */
 .inline-actions > div { flex: 1 1 220px; }
 /* Highlighted temporary password text */
-.reset-box code { padding: 2px 6px; border-radius: 4px; background: rgba(127,127,127,.18); font-size: 1.05em; user-select: all; }
+.reset-box code {
+   padding: 2px 6px;
+    border-radius: 4px;
+     background: rgba(127,127,127,.18); 
+     font-size: 1.05em; 
+     user-select: all; }
 
 /* Grid of room cards (admin room management) */
-.room-cards { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 13px; margin-top: 18px; }
+.room-cards { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); 
+  gap: 13px; 
+  margin-top: 18px;
+ }
 /* One room card */
-.room-card { padding: 17px; border: 1px solid var(--line); border-radius: 8px; }
+.room-card {
+   padding: 17px; 
+   border: 1px solid var(--line); 
+   border-radius: 8px; 
+}
 /* Room card title */
-.room-card h3 { margin: 0 0 6px; color: var(--navy); font: 600 1.2rem var(--serif); }
+.room-card h3 { 
+  margin: 0 0 6px; 
+  color: var(--navy); 
+  font: 600 1.2rem var(--serif); 
+}
 /* Room card text */
-.room-card p { margin: 5px 0; font-size: .82rem; }
+.room-card p {
+   margin: 5px 0; 
+   font-size: .82rem; 
+  }
 /* Full-width button in the card */
-.room-card .button { width: 100%; margin-top: 12px; }
+.room-card .button { 
+  width: 100%; 
+  margin-top: 12px; 
+}
 /* Row of small room photos */
-.room-image-preview { display: flex; gap: 8px; margin-top: 10px; }
+.room-image-preview {
+   display: flex; 
+   gap: 8px; 
+   margin-top: 10px; 
+  }
 /* Photo thumbnail size and crop */
-.room-image-preview img, .room-inventory-image { width: 112px; height: 74px; border-radius: 6px; object-fit: cover; }
+.room-image-preview img, .room-inventory-image {
+   width: 112px;
+    height: 74px;
+   border-radius: 6px; 
+   object-fit: cover; 
+  }
 /* Smaller thumbnail used in tables */
-.room-inventory-image { width: 84px; height: 58px; }
+.room-inventory-image { 
+  width: 84px; 
+  height: 58px; 
+}
 
 /* Tablets/phones (760px wide or less): */
 @media (max-width: 760px) {
   /* Sidebar goes on top instead of the left */
   .app-shell { display: block; }
   /* Sidebar becomes a full-width top bar */
-  .sidebar { position: static; width: 100%; height: auto; padding: 14px; }
+  .sidebar { 
+    position: static;
+    width: 100%; 
+    height: auto;
+    padding: 14px; }
   /* Less logo spacing */
   .sidebar .brand { margin: 0 5px 15px; }
   /* Hide these extras on phones */
   .nav-label, .nav-heading, .sidebar-foot { display: none; }
   /* Menu becomes a row you can scroll sideways */
-  #nav { display: flex; overflow-x: auto; overflow-y: hidden; gap: 5px; }
+  #nav {
+     display: flex; 
+     overflow-x: auto;
+      overflow-y: hidden;
+       gap: 5px; 
+  }
   /* Menu buttons shrink to fit their text */
-  .nav-item { width: auto; flex: 0 0 auto; padding: 9px 11px; }
+  .nav-item { 
+    width: auto;
+     flex: 0 0 auto;
+      padding: 9px 11px;
+   }
   /* Less padding around content */
   .main { padding: 20px 15px; }
 }
@@ -150,5 +401,8 @@ tbody tr:last-child td { border-bottom: 0; }
   /* Top bar content aligns to the top */
   .topbar { align-items: flex-start; }
   /* Badge and buttons stack vertically */
-  .top-actions { flex-direction: column-reverse; align-items: flex-end; gap: 7px; }
+  .top-actions { flex-direction: column-reverse; 
+    align-items: flex-end; 
+    gap: 7px; 
+  }
 }

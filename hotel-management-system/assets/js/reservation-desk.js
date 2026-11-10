@@ -107,8 +107,8 @@
       `Dear ${guestName(r)},`,
       "",
       confirmed
-        ? "Your reservation at Harbor & Pine Hotel & Resort is confirmed."
-        : "We have received your reservation at Harbor & Pine Hotel & Resort and will confirm it shortly.",
+        ? "Your reservation at LUNARA Hotel & Resort is confirmed."
+        : "We have received your reservation at LUNARA Hotel & Resort and will confirm it shortly.",
       "",
       `Reference: ${r.id}`,
       `Room: ${roomLabel(r)}`,
@@ -120,10 +120,10 @@
       "",
       "Please bring a valid ID at check-in.",
       "",
-      "Harbor & Pine Hotel & Resort"
+      "LUNARA Hotel & Resort"
     ];
     window.location.href =
-      `mailto:${email}?subject=${encodeURIComponent("Your Harbor & Pine booking")}` +
+      `mailto:${email}?subject=${encodeURIComponent("Your LUNARA booking")}` +
       `&body=${encodeURIComponent(lines.join("\n"))}`;
   }
 

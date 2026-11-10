@@ -1,7 +1,7 @@
 // Set these values from Supabase Project Settings > API before starting the app.
 const SUPABASE_URL = "https://srkdhwvkorvjfejleflg.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_HK_E1EGgEkxHTPQjEuDgNw_saSLaZfn";
-const CURRENCY_CODE = "USD";
+const CURRENCY_CODE = "PHP";
 
 function isValidPassword(password) {
   return password.length >= 12 &&
@@ -72,12 +72,3 @@ const ROLE_MENUS = {
     "Reports"
   ]
 };
-
-const ROUTES = [
-    "Reservations",
-    "New Reservation",
-    "Booking Calendar",
-    "Room Availability",
-    "Reservation Requests",
-    "Rates & Promotions"
-  ];

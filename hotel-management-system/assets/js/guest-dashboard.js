@@ -105,7 +105,8 @@ const status = (r) => String(r.status || "").toLowerCase();
 const isCancelled = (r) => status(r) === "cancelled" || status(r) === "canceled";
 const isPast = (r) => !isCancelled(r) && (["checked_out", "completed"].includes(status(r)) || r.check_out < localToday());
 const isUpcoming = (r) => !isCancelled(r) && !isPast(r);
-const canChange = (r) => ["pending", "confirmed"].includes(status(r)) && r.check_in > localToday();
+//const canChange = (r) => ["pending", "confirmed"].includes(status(r)) && r.check_in > localToday();
+const canChange = (r) => ["pending", "reserved", "confirmed"].includes(status(r)) && r.check_in > localToday();
 const roomLabel = (r) => {
   const type = r.rooms?.room_types?.name;
   const num = r.rooms?.room_number;

@@ -6,6 +6,9 @@ const roomPhotos = [
   "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=85"
 ];
 
+let allRooms = [];
+let activeFilter = "all";
+
 function createRoomArt(index, label, detail = false) {
   const art = document.createElement("div");
   art.className = `room-art room-art--${(index % 3) + 1}${detail ? " room-detail-art" : ""}`;
@@ -47,8 +50,45 @@ function openRoomDetails(room, index) {
   dialog.showModal();
 }
 
+function buildRoomCard(room, index) {
+  const card = document.createElement("button");
+  card.className = "public-room-card";
+  card.type = "button";
+  card.setAttribute("aria-label", `View details for ${room.name}`);
+  card.appendChild(createRoomArt(index, `Photo of the ${room.name} room`));
+
+  const copy = document.createElement("div");
+  copy.className = "public-room-copy";
+  const title = document.createElement("h3");
+  title.textContent = room.name;
+  const description = document.createElement("p");
+  description.textContent = room.description || "A comfortable room for a considered stay.";
+  const meta = document.createElement("div");
+  meta.className = "public-room-meta";
+  const capacity = document.createElement("span");
+  capacity.textContent = `Up to ${room.capacity} ${Number(room.capacity) === 1 ? "guest" : "guests"}`;
+  const rate = document.createElement("strong");
+  rate.textContent = `${roomCurrency(room.nightly_rate)} / night`;
+  meta.append(capacity, rate);
+  copy.append(title, description, meta);
+  card.appendChild(copy);
+  card.addEventListener("click", () => openRoomDetails(room, index));
+  return card;
+}
+
+function renderRoomCards() {
+  const visible = allRooms
+    .map((room, index) => ({ room, index }))
+    .filter(({ room }) => activeFilter === "all" || String(room.name).toLowerCase().includes(activeFilter));
+  if (!visible.length) {
+    showRoomListStatus("No rooms in this category yet.");
+    return;
+  }
+  document.getElementById("publicRoomGrid")
+    .replaceChildren(...visible.map(({ room, index }) => buildRoomCard(room, index)));
+}
+
 async function loadPublicRoomTypes() {
-  const grid = document.getElementById("publicRoomGrid");
   const { data: rooms, error } = await sb.rpc("get_public_room_types");
   if (error) {
     console.error("Unable to load public room types:", error);
@@ -59,34 +99,19 @@ async function loadPublicRoomTypes() {
     showRoomListStatus("There are no active room types to display yet.");
     return;
   }
-
-  const cards = rooms.map((room, index) => {
-    const card = document.createElement("button");
-    card.className = "public-room-card";
-    card.type = "button";
-    card.setAttribute("aria-label", `View details for ${room.name}`);
-    card.appendChild(createRoomArt(index, `Photo of the ${room.name} room`));
-
-    const copy = document.createElement("div");
-    copy.className = "public-room-copy";
-    const title = document.createElement("h3");
-    title.textContent = room.name;
-    const description = document.createElement("p");
-    description.textContent = room.description || "A comfortable room for a considered stay.";
-    const meta = document.createElement("div");
-    meta.className = "public-room-meta";
-    const capacity = document.createElement("span");
-    capacity.textContent = `Up to ${room.capacity} ${Number(room.capacity) === 1 ? "guest" : "guests"}`;
-    const rate = document.createElement("strong");
-    rate.textContent = `${roomCurrency(room.nightly_rate)} / night`;
-    meta.append(capacity, rate);
-    copy.append(title, description, meta);
-    card.appendChild(copy);
-    card.addEventListener("click", () => openRoomDetails(room, index));
-    return card;
-  });
-  grid.replaceChildren(...cards);
+  allRooms = rooms;
+  renderRoomCards();
 }
+
+document.querySelectorAll(".kind-tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".kind-tab").forEach((t) => t.classList.remove("is-active"));
+    tab.classList.add("is-active");
+    const label = tab.textContent.trim().toLowerCase();
+    activeFilter = label === "all rooms" ? "all" : label;
+    renderRoomCards();
+  });
+});
 
 document.querySelector(".room-detail-close").addEventListener("click", () => {
   document.getElementById("roomDetailDialog").close();

@@ -9,13 +9,7 @@ const ADMIN_MODULES = [
   "Activity Logs", "Login History", "Security Logs", "Database & Backups", "System Reports"
 ];
 const PROTECTED_ADMIN_MODULES = ["User Management", "Role Permissions", "System Settings"];
-const ADMIN_MENU = [
-  "## Administration", "User Management", "Role Permissions", "System Settings", "Room Categories",
-  "## Monitoring", "Activity Logs", "Login History", "Security Logs", "Database & Backups", "System Reports",
-  "## Hotel operations", "Rooms & Cottages", "Reservations", "Check-in", "Check-out", "Room Assignment",
-  "Customers / Guests", "Housekeeping", "Maintenance Requests", "Billing", "Payments & Transactions",
-  "Discounts", "Facilities & Amenities", "Feedback & Reviews"
-];
+
 const SECURITY_FILTER = "and(table_name.eq.profiles,action.eq.UPDATE),table_name.in.(role_modules,system_settings,admin_action,password_reset_requests),and(table_name.eq.auth,action.eq.password_change)";
 const BACKUP_TABLES = [
   ["roles", "id"], ["profiles", "id"], ["guests", "id"], ["room_types", "id"], ["rooms", "id"],

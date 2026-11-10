@@ -108,7 +108,7 @@
     area.replaceChildren();
     const brand = document.createElement("div");
     brand.className = "pa-brand";
-    brand.textContent = "HARBOR & PINE · HOTEL & RESORT";
+    brand.textContent = "LUNARA · HOTEL & RESORT";
     const title = document.createElement("h1");
     title.textContent = heading;
     area.append(brand, title);
@@ -256,7 +256,7 @@
           }
         }
       ],
-      footer: "Thank you for staying with Harbor & Pine."
+      footer: "Thank you for staying with LUNARA."
     });
   }
 
