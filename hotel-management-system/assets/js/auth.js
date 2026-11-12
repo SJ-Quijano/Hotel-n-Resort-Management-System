@@ -5,20 +5,20 @@ function showAuthMessage(text, type) {
 }
 
 function postAuthDestination() {
-  return new URLSearchParams(window.location.search).get("next") === "book.html"
-    ? "book.html"
-    : "dashboard.html";
+  return new URLSearchParams(window.location.search).get("next") === "book.html" ? "book.html" : "";
 }
 
-// Guests go to the guest dashboard; every staff role goes to the staff dashboard.
+// Guests go to the guest dashboard, the administrator to the administration page, and every
+// other staff role to the staff dashboard.
 // If the role can't be read, fall back to the guest page (least privilege).
 async function roleHome() {
   const { data, error } = await sb.rpc("current_role");
-  return !error && data && data !== "guest" ? "dashboard.html" : "guest-dashboard.html";
+  if (error || !data || data === "guest") return "guest-dashboard.html";
+  return data === "admin" ? "admin.html" : "dashboard.html";
 }
 
 async function afterAuthDestination() {
-  return postAuthDestination() === "book.html" ? "book.html" : await roleHome();
+  return postAuthDestination() || await roleHome();
 }
 
 // Staff sign in with an employee code. Supabase needs an email-shaped login, so the code is

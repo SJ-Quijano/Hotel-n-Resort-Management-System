@@ -40,7 +40,8 @@ async function recordAuthEvent(action) {
   return error;
 }
 
-// Menu per role. The administrator menu is handled by pages/admin.html (system data only).
+// Menu per role for pages/dashboard.html (staff, including the administrator).
+// Guests use pages/guest-dashboard.html, which has its own fixed menu, so the guest list is only kept for reference.
 const ROLE_MENUS = {
   guest: [
     "Browse Rooms",
@@ -54,21 +55,12 @@ const ROLE_MENUS = {
     "Feedback & Reviews",
     "Notifications",
     "Account Settings"
-  ], //Nakikita nila sa dashboard huhu
+  ],
   receptionist: ["Guest Registration", "Walk-in Booking", "Reservations", "Check-in", "Check-out", "Room Assignment", "Payment", "Guest Requests"],
   reservation_officer: ["Booking Calendar", "Room Availability", "Guest Booking Details", "Reservation Requests", "Booking Changes", "Cancellation Records", "Promotions and Discounts", "Reservation Reports", "New Reservation"],
   housekeeping: ["Housekeeping", "Maintenance Requests", "Reports"],
   maintenance: ["Maintenance Requests", "Reports"],
   manager: ["Room Management", "Online Reservation", "Guest Registration", "Check-in", "Check-out", "Room Assignment", "Housekeeping", "Maintenance Requests", "Billing", "Payment", "Discounts", "Cancellation", "Customer Feedback", "Reports", "Audit Logs"],
   accountant: ["Guest Registration", "Check-out", "Billing", "Payment", "Discounts", "Cancellation", "Reports", "Audit Logs"],
-  admin: [
-    "User Management",
-    "Role Permissions",
-    "Room Categories",
-    "System Settings",
-    "Activity Logs",
-    //"Login & Security",
-    //"Database & Backup",
-    "Reports"
-  ]
+  
 };

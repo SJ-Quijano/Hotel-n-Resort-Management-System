@@ -1,7 +1,3 @@
-/* admin.js: Administrator console. SYSTEM data only (no guests, reservations or payments).
-   Load after config.js (global `sb`, ROLE_MENUS, isValidPassword, recordAuthEvent) and role-guard.js.
-   The sidebar is built from ROLE_MENUS.admin in config.js; each name maps to a renderer below. */
-
 const ROLES = ["guest", "receptionist", "reservation_officer", "housekeeping", "maintenance", "manager", "accountant", "admin"];
 const STAFF_ROLES = ROLES.filter((r) => r !== "guest");
 const ROLE_NAMES = { admin: "Administrator", reservation_officer: "Reservation officer" };

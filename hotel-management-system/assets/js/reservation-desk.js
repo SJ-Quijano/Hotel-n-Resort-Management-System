@@ -1,4 +1,4 @@
-/* reservation-desk.js: the reservation officer workspace para sa pages/dashboard.html.*/
+/* reservation-desk.js: tthe reservation officer workspace for pages/dashboard.html.*/
 (function () {
   "use strict";
 

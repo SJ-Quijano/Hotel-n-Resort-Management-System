@@ -3,6 +3,7 @@
 const RoleGuard = (() => {
   const LOGIN_PAGE = "index.html";
   const STAFF_HOME = "dashboard.html";
+  const ADMIN_HOME = "admin.html";
   const GUEST_HOME = "guest-dashboard.html";
 
   async function getRole() {
@@ -25,8 +26,10 @@ const RoleGuard = (() => {
     return !error && data?.must_change_password === true;
   }
 
+  // Each kind of account has its own home page.
   function homeFor(role) {
-    return role === "guest" ? GUEST_HOME : STAFF_HOME;
+    if (role === "guest") return GUEST_HOME;
+    return role === "admin" ? ADMIN_HOME : STAFF_HOME;
   }
 
   function onLoginPage() {
@@ -75,6 +78,8 @@ const RoleGuard = (() => {
     await check();
   }
 
+  // kind: "guest" or "staff". allowedRoles (optional) narrows it to specific roles.
+  // Anyone who is not allowed on the page is sent to their own home page.
   async function require(kind, allowedRoles) {
     reloadWhenRestoredFromCache();
     document.documentElement.style.visibility = "hidden";

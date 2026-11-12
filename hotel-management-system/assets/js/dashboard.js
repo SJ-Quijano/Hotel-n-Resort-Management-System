@@ -247,6 +247,11 @@ async function renderOverview() {
       return;
     }
   }
+
+    if (window.FrontDesk && ["receptionist", "reservation_officer"].includes(activeRole)) {
+    return await FrontDesk.overview();
+  }
+  
   const { content, panel } = setContentTitle("At a glance", "A live snapshot of the records available to your account.");
   const stats = document.createElement("div");
   stats.className = "stat-grid";
@@ -295,23 +300,6 @@ async function loadAllRows(table, selection, applyFilters, orderColumn) {
     if (!data || data.length < pageSize) return rows;
   }
 }
-
-//async function sumCompletedPayments() {
- // const pageSize = 500;
- // let offset = 0;
- // let total = 0;
- // while (true) {
-   // const { data, error } = await sb.from("payments")
-   //   .select("amount")
-   //   .eq("status", "completed")
-   //   .order("paid_at", { ascending: true })
-   //   .range(offset, offset + pageSize - 1);
-   // if (error) throw new Error(`Unable to calculate revenue: ${error.message}`);
-   // total += (data || []).reduce((sum, payment) => sum + Number(payment.amount), 0);
-   // if (!data || data.length < pageSize) return total;
-   // offset += pageSize;
- // }
-//}
 
 function localDayStart(date) {
   return new Date(`${date}T00:00:00`).toISOString();
@@ -1011,7 +999,7 @@ async function renderGuestRegistration(content) {
   drawGuests();
 }
 
-async function renderRooms(content, title = "Room management") {
+async function renderRooms(content, title = "Room Management") {
   const { content: page } = setContentTitle(title, "Add, update, and deactivate rooms; manage room types, rates, capacity, and inventory details.");
   const canManage = ["admin", "manager"].includes(activeRole);
   const types = await loadRowsByRole("room_types", "id,name,description,capacity,nightly_rate,active", "name");
@@ -1775,11 +1763,11 @@ async function renderModule(name) {
       addPanel(content, "Permission required", "If you need this module, ask an administrator to review your role.");
       return;
     }
-    //if (name === "Dashboard") return await renderOverview();
     const content = document.getElementById("content");
     content.replaceChildren();
     if (name === "Dashboard") return await renderOverview();
     if (activeRole === "admin" && ADMIN_MODULES.includes(name)) return await renderAdminModule(name);
+    if (window.FrontDesk && FrontDesk.handles(activeRole, name)) return await FrontDesk.render(name, content);
 
         if (window.FrontDesk && FrontDesk.handles(activeRole, name)) return await FrontDesk.render(name, content);
     if (name === "Browse Rooms" || name === "Book a Room") return await renderAvailability(content, false);
@@ -1804,9 +1792,8 @@ async function renderModule(name) {
       return panel;
     }
     if (name === "Activity Logs") return await renderAuditLogs(content, name);
-    //if (name === "Online Reservation") return await renderAvailability(content, activeRole !== "guest");
-   // if (name === "My Reservations") return await renderReservations(content, "cancel");
-   // if (name === "Guest Registration") return await renderGuestRegistration(content);
+    if (name === "Online Reservation") return await renderAvailability(content, activeRole !== "guest");
+    if (name === "Guest Registration") return await renderGuestRegistration(content);
     if (name === "Check-in") return await renderReservations(content, "checkin");
     if (name === "Check-out") return await renderReservations(content, "checkout");
     if (name === "Cancellation") return await renderReservations(content, "cancel");
@@ -1890,4 +1877,5 @@ async function initDashboard() {
   document.getElementById("logoutBtn")?.addEventListener("click", signOut);
 }
 
-initDashboard();
+if (document.readyState === "complete") initDashboard();
+else window.addEventListener("load", initDashboard);
