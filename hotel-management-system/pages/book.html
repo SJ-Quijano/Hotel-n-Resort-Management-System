@@ -95,12 +95,12 @@
             </div>
             <div id="guestEmailField">
               <label for="guestEmail">Email address</label>
-              <input id="guestEmail" name="guestEmail" type="text" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" readonly />
+              <input id="guestEmail" name="guestEmail" type="email" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" readonly />
               <small class="booking-field-hint">So we can reach you about your booking</small>
             </div>
             <div>
               <label for="guestPhone">Phone number</label>
-              <input id="guestPhone" name="guestPhone" type="tel" autocomplete="tel" maxlength="32" required />
+              <input id="guestPhone" name="guestPhone" type="tel" inputmode="tel" pattern="(?:[0-9]|\s|\(|\)|\.|-){11,32}" autocomplete="tel" maxlength="32" required />
             </div>
             <div class="booking-field-wide">
               <label for="specialRequests">Special requests <span class="booking-optional">Optional</span></label>

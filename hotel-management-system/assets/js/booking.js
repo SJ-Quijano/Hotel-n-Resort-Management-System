@@ -5,10 +5,44 @@ const bookingState = {
   contact: null
 };
 
+const BOOKING_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const BOOKING_EMAIL_ERROR = "Enter a valid email address, such as userexample@gmail.com.";
+const BOOKING_PHONE_ERROR = "Enter an 11-digit Philippine mobile number starting with 09.";
+
+function isValidBookingEmail(email) {
+  return BOOKING_EMAIL_PATTERN.test(String(email || "").trim());
+}
+
+function isValidBookingPhone(phone) {
+  const value = String(phone || "").trim();
+  const digits = value.replace(/\D/g, "");
+  return /^[0-9\s().-]+$/.test(value) && /^09\d{9}$/.test(digits);
+}
+
 function localDateOffset(days) {
   const date = new Date();
   date.setDate(date.getDate() + days);
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+function dateOffsetFrom(value, days) {
+  const date = new Date(`${value}T12:00:00`);
+  date.setDate(date.getDate() + days);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+function currentYearBookingLimits() {
+  const year = new Date().getFullYear();
+  const lastCheckout = `${year}-12-31`;
+  return {
+    year,
+    lastCheckIn: dateOffsetFrom(lastCheckout, -1),
+    lastCheckout
+  };
+}
+
+function isWithinBookingYear(value, maximum) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) && value <= maximum;
 }
 
 function bookingCurrency(value) {
@@ -31,6 +65,14 @@ function clearBookingStatus() {
 }
 
 function showBookingStep(name) {
+  let emailError = "";
+  if (["room", "price", "payment", "complete"].includes(name)) {
+    const email = bookingState.user?.email || bookingState.contact?.email || "";
+    if (!email) emailError = "Enter your email address.";
+    else if (!isValidBookingEmail(email)) emailError = BOOKING_EMAIL_ERROR;
+    if (emailError) name = "guest";
+  }
+
   const stepByName = {
     search: "stepSearch",
     guest: "stepGuest",
@@ -47,6 +89,15 @@ function showBookingStep(name) {
     if (name === "complete") item.classList.add("completed");
   });
   clearBookingStatus();
+  if (emailError) {
+    const guestEmail = document.getElementById("guestEmail");
+    if (!bookingState.user) {
+      guestEmail.value = bookingState.contact?.email || guestEmail.value;
+      guestEmail.setCustomValidity(emailError);
+      guestEmail.focus();
+    }
+    showBookingStatus(emailError);
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -216,9 +267,27 @@ if (bookingState.user) {
 }
   document.getElementById("bookingApp").hidden = false;
   const guestEmail = document.getElementById("guestEmail");
+  const guestPhone = document.getElementById("guestPhone");
+  const updateGuestEmailValidity = () => {
+    const email = guestEmail.value.trim();
+    guestEmail.setCustomValidity(
+      !email ? "Enter your email address." : !isValidBookingEmail(email) ? BOOKING_EMAIL_ERROR : ""
+    );
+  };
+  const updateGuestPhoneValidity = () => {
+    const phone = guestPhone.value.trim();
+    guestPhone.setCustomValidity(
+      !phone ? "Enter a phone number we can reach you on." : !isValidBookingPhone(phone) ? BOOKING_PHONE_ERROR : ""
+    );
+  };
+  guestEmail.addEventListener("input", updateGuestEmailValidity);
+  guestEmail.addEventListener("change", updateGuestEmailValidity);
+  guestPhone.addEventListener("input", updateGuestPhoneValidity);
+  guestPhone.addEventListener("change", updateGuestPhoneValidity);
   if (bookingState.user) {
     // Signed in: the account's email is used, so there is nothing to type.
     guestEmail.readOnly = true;
+    guestEmail.required = false;
     document.getElementById("guestEmailField").hidden = true;
     document.getElementById("memberNote").hidden = false;
   } else {
@@ -230,17 +299,27 @@ if (bookingState.user) {
   document.getElementById("stayHere").addEventListener("click", stopReturnCountdown);
   const checkIn = document.getElementById("checkIn");
   const checkOut = document.getElementById("checkOut");
-  checkIn.min = localDateOffset(0);
-  checkIn.value = localDateOffset(1);
-  checkOut.min = localDateOffset(2);
-  checkOut.value = localDateOffset(2);
+  const yearLimits = currentYearBookingLimits();
+  const today = localDateOffset(0);
+  const tomorrow = localDateOffset(1);
+  checkIn.min = today;
+  checkIn.max = yearLimits.lastCheckIn;
+  checkOut.max = yearLimits.lastCheckout;
+  if (today <= yearLimits.lastCheckIn) {
+    checkIn.value = tomorrow <= yearLimits.lastCheckIn ? tomorrow : today;
+    checkOut.min = dateOffsetFrom(checkIn.value, 1);
+    checkOut.value = checkOut.min;
+  } else {
+    checkIn.value = "";
+    checkOut.value = "";
+    document.getElementById("searchRooms").disabled = true;
+    showBookingStatus(`No one-night stays can start before the end of ${yearLimits.year}.`);
+  }
   checkIn.addEventListener("change", () => {
-    const minimumCheckout = localDateOffset(0);
-    checkOut.min = checkIn.value >= minimumCheckout ? checkIn.value : minimumCheckout;
-    if (checkOut.value <= checkIn.value) {
-      const nextDay = new Date(`${checkIn.value}T12:00:00`);
-      nextDay.setDate(nextDay.getDate() + 1);
-      checkOut.value = `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, "0")}-${String(nextDay.getDate()).padStart(2, "0")}`;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(checkIn.value)) return;
+    checkOut.min = dateOffsetFrom(checkIn.value, 1);
+    if (checkOut.value < checkOut.min || checkOut.value > yearLimits.lastCheckout) {
+      checkOut.value = checkOut.min <= yearLimits.lastCheckout ? checkOut.min : "";
     }
   });
 
@@ -257,12 +336,23 @@ if (bookingState.user) {
     event.preventDefault();
     clearBookingStatus();
     const form = event.currentTarget;
+    const checkInValue = checkIn.value;
+    const checkOutValue = checkOut.value;
+    const dateError = `Dates must use a four-digit year and stay within ${yearLimits.year}.`;
+    if (checkInValue && !isWithinBookingYear(checkInValue, yearLimits.lastCheckIn)) {
+      showBookingStatus(dateError);
+      checkIn.focus();
+      return;
+    }
+    if (checkOutValue && !isWithinBookingYear(checkOutValue, yearLimits.lastCheckout)) {
+      showBookingStatus(dateError);
+      checkOut.focus();
+      return;
+    }
     if (!form.reportValidity()) return;
 
     const adults = Number(document.getElementById("adults").value);
     const children = Number(document.getElementById("children").value);
-    const checkInValue = checkIn.value;
-    const checkOutValue = checkOut.value;
     if (checkOutValue <= checkInValue || checkInValue < localDateOffset(0)) {
       showBookingStatus("Choose a valid check-in date and a later check-out date.");
       return;
@@ -316,11 +406,19 @@ if (bookingState.user) {
     } else if (!bookingState.user && !email) {
       problem = "Enter your email address.";
       focusId = "guestEmail";
-    } else if (phone.length < 5) {
-      problem = "Enter a phone number we can reach you on.";
+    } else if (!isValidBookingEmail(email)) {
+      problem = BOOKING_EMAIL_ERROR;
+      focusId = "guestEmail";
+    } else if (!isValidBookingPhone(phone)) {
+      problem = phone ? BOOKING_PHONE_ERROR : "Enter a phone number we can reach you on.";
       focusId = "guestPhone";
     }
     if (problem) {
+      if (focusId === "guestEmail") {
+        document.getElementById("guestEmail").setCustomValidity(problem);
+      } else if (focusId === "guestPhone") {
+        document.getElementById("guestPhone").setCustomValidity(problem);
+      }
       showBookingStatus(problem);
       document.getElementById(focusId).focus();
       return;
@@ -346,6 +444,41 @@ if (bookingState.user) {
     const button = event.currentTarget;
     if (!bookingState.room || !bookingState.search || !bookingState.contact) {
       showBookingStatus("Complete the room search and guest details before confirming your reservation.");
+      return;
+    }
+    const currentYearLimits = currentYearBookingLimits();
+    if (
+      !isWithinBookingYear(bookingState.search.checkIn, currentYearLimits.lastCheckIn)
+      || !isWithinBookingYear(bookingState.search.checkOut, currentYearLimits.lastCheckout)
+    ) {
+      showBookingStep("search");
+      showBookingStatus(`Dates must use a four-digit year and stay within ${currentYearLimits.year}.`);
+      return;
+    }
+    const email = bookingState.user?.email || bookingState.contact.email;
+    if (!email) {
+      showBookingStep("guest");
+      showBookingStatus("Enter your email address.");
+      return;
+    }
+    if (!isValidBookingEmail(email)) {
+      showBookingStep("guest");
+      if (!bookingState.user) {
+        const guestEmail = document.getElementById("guestEmail");
+        guestEmail.value = bookingState.contact.email;
+        guestEmail.setCustomValidity(BOOKING_EMAIL_ERROR);
+        guestEmail.focus();
+      }
+      showBookingStatus(BOOKING_EMAIL_ERROR);
+      return;
+    }
+    if (!isValidBookingPhone(bookingState.contact.phone)) {
+      showBookingStep("guest");
+      const guestPhone = document.getElementById("guestPhone");
+      guestPhone.value = bookingState.contact.phone;
+      guestPhone.setCustomValidity(BOOKING_PHONE_ERROR);
+      guestPhone.focus();
+      showBookingStatus(BOOKING_PHONE_ERROR);
       return;
     }
     button.disabled = true;
