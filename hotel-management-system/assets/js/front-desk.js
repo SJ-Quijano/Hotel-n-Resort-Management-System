@@ -1,4 +1,4 @@
-/* front-desk.js: the receptionist workspace para sa pages/dashboard.html. */
+/* front-desk.js: the receptionist workspace for pages/dashboard.html. */
 (function () {
   "use strict";
 
@@ -7,7 +7,7 @@
     "status,adults,children,nightly_rate,special_requests," +
     "guests(full_name,email,phone),rooms(room_number,room_types(name))";
 
-  const ROUTES = ["Walk-in Booking", "Reservations", "Check-in", "Check-out", "Payment", "Guest Requests"];
+  const ROUTES = ["Walk-in Booking", "Reservation Management", "Room Availability", "Payment", "Guest Requests"];
 
   /* ---------- small helpers ---------- */
   const hm = (value) => (value ? String(value).slice(0, 5) : "—");
@@ -68,6 +68,12 @@
     button.textContent = label;
     button.addEventListener("click", () => onClick(button));
     return button;
+  }
+
+  // Opens another menu item and highlights it in the sidebar.
+  function goTo(name) {
+    document.querySelectorAll(".nav-item").forEach((item) => item.classList.toggle("active", item.textContent === name));
+    return renderModule(name);
   }
 
   /* ---------- printing (booking confirmations and receipts) ---------- */
@@ -307,7 +313,7 @@
     panel.appendChild(stats);
     content.appendChild(panel);
 
-    const arrivalPanel = addPanel(content, "Today's arrivals", "Guests due to check in today. Use Check-in to authorize the arrival.");
+    const arrivalPanel = addPanel(content, "Today's arrivals", "Guests due to check in today. Open Reservation Management to check them in.");
     makeTable(
       arrivalPanel,
       ["Guest", "Contact", "Room", "Arrival", "Guests", "Special requests", "Payment", "Status"],
@@ -324,7 +330,7 @@
       }
     );
 
-    const departurePanel = addPanel(content, "Today's departures", "Guests due to leave today. Use Check-out once their balance is settled.");
+    const departurePanel = addPanel(content, "Today's departures", "Guests due to leave today. Open Reservation Management to check them out once their balance is settled.");
     makeTable(
       departurePanel,
       ["Guest", "Contact", "Room", "Departure", "Special requests", "Payment", "Status"],
@@ -349,120 +355,23 @@
     });
   }
 
-  /* ---------- check-in and check-out ---------- */
-  async function renderStay(mode, content) {
-    const isCheckIn = mode === "checkin";
+  /* ---------- reservation management: one list to check in, check out and bill ---------- */
+  async function renderReservationManagement(content) {
     const today = todayLocal();
     const [reservations, lookup] = await Promise.all([
       loadRowsByRole("reservations", RES_SELECT, "check_in"),
       loadFinance()
     ]);
-
     const panel = addPanel(
       content,
-      isCheckIn ? "Arrivals waiting to check in" : "Guests currently in house",
-      isCheckIn
-        ? "Confirmed reservations arriving today or earlier that have not been checked in."
-        : "Checked-in guests, soonest departure first. Review the balance before authorizing check-out."
-    );
-    const search = makeInput("Search guest, phone or room", "fdStaySearch", "search", false);
-    const toolbar = document.createElement("div");
-    toolbar.className = "toolbar";
-    toolbar.appendChild(search.wrapper);
-    panel.appendChild(toolbar);
-    const box = document.createElement("div");
-    panel.appendChild(box);
-
-    const rows = isCheckIn
-      ? reservations.filter((r) => r.status === "reserved" && r.check_in <= today).sort((a, b) => a.check_in.localeCompare(b.check_in))
-      : reservations.filter((r) => r.status === "checked_in").sort((a, b) => a.check_out.localeCompare(b.check_out));
-
-    const actionCell = (r) => {
-      const td = document.createElement("td");
-      const state = lookup.of(r);
-      td.appendChild(
-        smallButton(isCheckIn ? "Authorize check-in" : "Authorize check-out", true, async (button) => {
-          if (!isCheckIn && (!state.invoiced || state.balance > 0)) {
-            const reason = state.invoiced ? `${currency(state.balance)} is still due` : "no invoice has been issued yet";
-            if (!window.confirm(`${guestName(r)}: ${reason}. Check out anyway?`)) return;
-          }
-          button.disabled = true;
-          const { error } = await sb.rpc("transition_reservation", {
-            p_reservation_id: r.id,
-            p_status: isCheckIn ? "checked_in" : "checked_out"
-          });
-          if (error) {
-            notify(error.message, "error");
-            button.disabled = false;
-            return;
-          }
-          notify(isCheckIn ? "Guest checked in." : "Guest checked out.");
-          await renderModule(isCheckIn ? "Check-in" : "Check-out");
-        })
-      );
-      td.appendChild(smallButton("Print confirmation", false, () => printConfirmation(r)));
-      return td;
-    };
-
-    const draw = () => {
-      const query = search.input.value.trim().toLowerCase();
-      box.replaceChildren();
-      const shown = rows.filter((r) => matches(query, [guestName(r), r.guests?.phone, r.guests?.email, r.rooms?.room_number]));
-      makeTable(
-        box,
-        isCheckIn
-          ? ["Guest", "Contact", "Room", "Stay schedule", "Guests", "Special requests", "Payment", "Actions"]
-          : ["Guest", "Contact", "Room", "Checked in", "Departure", "Special requests", "Payment", "Actions"],
-        shown,
-        (r, row) => {
-          cell(row, guestName(r));
-          cell(row, contactOf(r));
-          cell(row, roomLabel(r));
-          if (isCheckIn) {
-            cell(row, scheduleOf(r));
-            cell(row, guestCountOf(r));
-          } else {
-            cell(row, r.checked_in_at ? new Date(r.checked_in_at).toLocaleString() : formatDate(r.check_in));
-            const overdue = r.check_out < today ? " · overdue" : r.check_out === today ? " · today" : "";
-            cell(row, `${formatDate(r.check_out)} ${hm(r.check_out_time)}${overdue}`);
-          }
-          cell(row, r.special_requests);
-          cell(row, lookup.of(r).text);
-          row.appendChild(actionCell(r));
-        }
-      );
-    };
-    search.input.addEventListener("input", draw);
-    draw();
-
-    if (isCheckIn) {
-      const doneToday = reservations.filter((r) => r.status === "checked_in" && r.check_in === today);
-      const donePanel = addPanel(content, "Checked in today", "Guests who arrived today.");
-      makeTable(donePanel, ["Guest", "Room", "Checked in", "Departure", "Payment"], doneToday, (r, row) => {
-        cell(row, guestName(r));
-        cell(row, roomLabel(r));
-        cell(row, r.checked_in_at ? new Date(r.checked_in_at).toLocaleTimeString() : "—");
-        cell(row, `${formatDate(r.check_out)} ${hm(r.check_out_time)}`);
-        cell(row, lookup.of(r).text);
-      });
-    }
-  }
-
-  /* ---------- reservation register ---------- */
-  async function renderReservationList(content) {
-    const [reservations, lookup] = await Promise.all([
-      loadRowsByRole("reservations", RES_SELECT, "check_in"),
-      loadFinance()
-    ]);
-    const panel = addPanel(
-      content,
-      "Reservation register",
-      "Reservation details, stay schedules, payment status, and special requests. Print a booking confirmation for any reservation."
+      "Reservation management",
+      "Check guests in and out, issue invoices and print confirmations. Confirmed and in-house stays are shown first."
     );
     const status = makeSelect(
-      "Status",
+      "Show",
       "fdResStatus",
       [
+        ["active", "Active (confirmed and in house)"],
         ["all", "All statuses"],
         ["pending", "Pending approval"],
         ["reserved", "Confirmed"],
@@ -483,16 +392,72 @@
     const box = document.createElement("div");
     panel.appendChild(box);
 
+    const transition = async (button, reservation, nextStatus, doneMessage) => {
+      button.disabled = true;
+      const { error } = await sb.rpc("transition_reservation", {
+        p_reservation_id: reservation.id,
+        p_status: nextStatus
+      });
+      if (error) {
+        notify(error.message, "error");
+        button.disabled = false;
+        return;
+      }
+      notify(doneMessage);
+      await renderModule("Reservation Management");
+    };
+
+    const actionCell = (r) => {
+      const td = document.createElement("td");
+      const pay = lookup.of(r);
+      if (r.status === "reserved" && r.check_in <= today) {
+        td.appendChild(smallButton("Check in", true, (button) => transition(button, r, "checked_in", "Guest checked in.")));
+      }
+      if (r.status === "checked_in") {
+        td.appendChild(
+          smallButton("Check out", true, (button) => {
+            if (!pay.invoiced || pay.balance > 0) {
+              const reason = pay.invoiced ? `${currency(pay.balance)} is still due` : "no invoice has been issued yet";
+              if (!window.confirm(`${guestName(r)}: ${reason}. Check out anyway?`)) return;
+            }
+            return transition(button, r, "checked_out", "Guest checked out.");
+          })
+        );
+      }
+      if (["reserved", "checked_in", "checked_out"].includes(r.status) && !pay.invoiced) {
+        td.appendChild(
+          smallButton("Create invoice", false, async (button) => {
+            button.disabled = true;
+            const { error } = await sb.rpc("create_invoice", { p_reservation_id: r.id });
+            if (error) {
+              notify(error.message, "error");
+              button.disabled = false;
+              return;
+            }
+            notify("Invoice issued.");
+            await renderModule("Reservation Management");
+          })
+        );
+      }
+      if (pay.invoiced && pay.balance > 0) {
+        td.appendChild(smallButton("Take payment", false, () => goTo("Payment")));
+      }
+      td.appendChild(smallButton("Print", false, () => printConfirmation(r)));
+      return td;
+    };
+
     const draw = () => {
       const query = search.input.value.trim().toLowerCase();
       box.replaceChildren();
       const shown = reservations.filter(
         (r) =>
-          (status.input.value === "all" || r.status === status.input.value) &&
+          (status.input.value === "all" ||
+            (status.input.value === "active" ? ["reserved", "checked_in"].includes(r.status) : r.status === status.input.value)) &&
           (!from.input.value || r.check_in >= from.input.value) &&
           (!to.input.value || r.check_in <= to.input.value) &&
           matches(query, [guestName(r), r.guests?.phone, r.guests?.email, r.rooms?.room_number])
       );
+      if (status.input.value === "active") shown.sort((a, b) => a.check_in.localeCompare(b.check_in));
       makeTable(
         box,
         ["Reference", "Guest", "Contact", "Room", "Stay schedule", "Guests", "Special requests", "Status", "Payment", "Actions"],
@@ -507,9 +472,7 @@
           cell(row, r.special_requests);
           cell(row, humanize(r.status));
           cell(row, lookup.of(r).text);
-          const td = document.createElement("td");
-          td.appendChild(smallButton("Print confirmation", false, () => printConfirmation(r)));
-          row.appendChild(td);
+          row.appendChild(actionCell(r));
         }
       );
     };
@@ -752,14 +715,20 @@
     );
   }
 
-  /* ---------- walk-in booking (reuses the staff booking search) ---------- */
+  /* ---------- walk-in booking: reuses the reservation desk's guest search and room picker ---------- */
   async function renderWalkIn(content) {
-    addPanel(
-      content,
-      "Walk-in guests",
-      "Register the guest first under Guest Registration, then choose their dates and room here. Walk-in bookings are confirmed immediately."
-    );
+    if (window.ReservationDesk) return window.ReservationDesk.renderBooking(content, "Walk-in Booking");
     return renderAvailability(content, true);
+  }
+
+  /* ---------- room availability: reuses the reservation desk's calendar and free-room search ---------- */
+  async function renderRoomAvailability(content) {
+    if (!window.ReservationDesk) {
+      notify("Room availability needs reservation-desk.js to be loaded.", "error");
+      return;
+    }
+    await window.ReservationDesk.render("Booking Calendar", content);
+    await window.ReservationDesk.render("Room Availability", content);
   }
 
   /* ---------- routing used by dashboard.js ---------- */
@@ -780,9 +749,8 @@
     const { content } = setContentTitle(name, "");
     if (activeRole === "reservation_officer") return window.ReservationDesk.render(name, content);
     if (name === "Walk-in Booking") return renderWalkIn(content);
-    if (name === "Reservations") return renderReservationList(content);
-    if (name === "Check-in") return renderStay("checkin", content);
-    if (name === "Check-out") return renderStay("checkout", content);
+    if (name === "Reservation Management") return renderReservationManagement(content);
+    if (name === "Room Availability") return renderRoomAvailability(content);
     if (name === "Payment") return renderPayments(content);
     if (name === "Guest Requests") return renderGuestRequests(content);
   }

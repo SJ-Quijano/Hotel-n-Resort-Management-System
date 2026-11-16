@@ -56,7 +56,7 @@ const ROLE_MENUS = {
     "Notifications",
     "Account Settings"
   ],
-  receptionist: ["Guest Registration", "Walk-in Booking", "Reservations", "Check-in", "Check-out", "Room Assignment", "Payment", "Guest Requests"],
+    receptionist: ["Guest Registration", "Walk-in Booking", "Reservation Management", "Room Availability", "Room Assignment", "Payment", "Guest Requests"],
   reservation_officer: ["Booking Calendar", "Room Availability", "Guest Booking Details", "Reservation Requests", "Booking Changes", "Cancellation Records", "Promotions and Discounts", "Reservation Reports", "New Reservation"],
   housekeeping: ["Housekeeping", "Maintenance Requests", "Reports"],
   maintenance: ["Maintenance Requests", "Reports"],

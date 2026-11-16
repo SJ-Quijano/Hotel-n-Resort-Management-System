@@ -1787,8 +1787,7 @@ async function renderModule(name) {
     if (name === "Dashboard") return await renderOverview();
     if (activeRole === "admin" && ADMIN_MODULES.includes(name)) return await renderAdminModule(name);
     if (window.FrontDesk && FrontDesk.handles(activeRole, name)) return await FrontDesk.render(name, content);
-
-        if (window.FrontDesk && FrontDesk.handles(activeRole, name)) return await FrontDesk.render(name, content);
+  
     if (name === "Browse Rooms" || name === "Book a Room") return await renderAvailability(content, false);
     if (name === "My Reservations" || name === "My Stay") return await renderReservations(content, "cancel");
     if (name === "My Profile") return await renderGuestRegistration(content);
