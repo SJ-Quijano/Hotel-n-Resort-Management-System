@@ -47,6 +47,11 @@
 
       <a class="hero-scroll" href="#about"><span aria-hidden="true"></span> SCROLL TO EXPLORE</a>
       <div class="hero-caption">COASTAL LIVING, THOUGHTFULLY REIMAGINED</div>
+      <div class="hero-slider-controls" role="group" aria-label="Hero image controls">
+        <button type="button" class="hero-slider-button" id="heroPrevious" aria-label="Previous resort image">‹</button>
+        <span class="hero-slider-status" id="heroSliderStatus" aria-live="polite">Image 1 of 6</span>
+        <button type="button" class="hero-slider-button" id="heroNext" aria-label="Next resort image">›</button>
+      </div>
     </section>
 
     <section class="welcome-section" id="about">
@@ -90,6 +95,7 @@
         </article>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
@@ -102,6 +108,7 @@
   </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../assets/js/config.js"></script>
+<script src="../assets/js/home.js"></script>
 <script src="../assets/js/role-guard.js"></script>
 <script>RoleGuard.redirectIfLoggedIn();</script>
 </body>
