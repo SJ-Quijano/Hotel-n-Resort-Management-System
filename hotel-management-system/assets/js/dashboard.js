@@ -204,6 +204,25 @@ function isMissingProfileActiveColumn(error) {
     && /column.*(?:profiles|profile)\.active.*does not exist/i.test(error.message || "");
 }
 
+function defaultRoleMenus() {
+  if (!window.__defaultRoleMenus) window.__defaultRoleMenus = JSON.parse(JSON.stringify(ROLE_MENUS));
+  return window.__defaultRoleMenus;
+}
+
+async function applyRoleModuleOverrides(role) {
+  const defaults = defaultRoleMenus();
+  ROLE_MENUS[role] = [...(defaults[role] || [])];
+  try {
+    const { data, error } = await sb.from("role_modules").select("module,enabled").eq("role_name", role);
+    if (error || !data?.length) return;
+    const off = new Set(data.filter((item) => !item.enabled).map((item) => item.module));
+    const kept = ROLE_MENUS[role].filter((item) => item.startsWith("## ") || !off.has(item));
+    ROLE_MENUS[role] = kept.filter((item, index) => !item.startsWith("## ") || (kept[index + 1] && !kept[index + 1].startsWith("## ")));
+  } catch (error) {
+    console.error("Unable to load role module settings:", error);
+  }
+}
+
 function addNavigation(role) {
   const nav = document.getElementById("nav");
   nav.replaceChildren();

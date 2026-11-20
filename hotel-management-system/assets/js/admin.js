@@ -1,7 +1,6 @@
 const ROLES = ["guest", "receptionist", "reservation_officer", "housekeeping", "maintenance", "manager", "accountant", "admin"];
 const STAFF_ROLES = ROLES.filter((r) => r !== "guest");
 const ROLE_NAMES = { admin: "Administrator", reservation_officer: "Reservation officer" };
-const PROTECTED_ADMIN_MODULES = ["User Management", "Role Permissions", "System Settings"];
 const LOGIN_TABLES = ["auth", "auth_events"];
 const SECURITY_TABLES = ["admin_action", "profiles", "role_modules", "system_settings", "room_types"];
 const SETTING_TYPES = { default_check_in_time: "time", default_check_out_time: "time", online_booking_enabled: "boolean", support_email: "email" };
@@ -152,7 +151,6 @@ async function renderOverview(root) {
     ])),
     panel("Shortcuts", "", h("div", { class: "adm-actions" },
       button("Create employee", () => show("User Management")),
-      button("Review permissions", () => show("Role Permissions")),
       button("System settings", () => show("System Settings")),
       button("Export system data", () => show("Database & Backup")))),
     h("div", { class: "adm-grid2" },
@@ -264,45 +262,6 @@ async function renderUsers(root) {
     done();
   });
   root.append(panel("Create employee account", "Only administrators can provision staff accounts.", form));
-}
-
-/* -------------------------------------------------------- role permissions */
-async function renderPermissions(root) {
-  const rows = await load("role permissions", sb.from("role_modules").select("role_name,module,enabled"));
-  const menus = typeof ROLE_MENUS !== "undefined" ? ROLE_MENUS : {};
-  const modules = [...new Set(Object.values(menus).flat())];
-  const state = new Map(rows.map((r) => [`${r.role_name}|${r.module}`, r.enabled]));
-
-  if (!rows.length) {
-    const seed = button("Load defaults from the role menus", async (e) => {
-      const defaults = Object.entries(menus).flatMap(([role_name, list]) => list.map((module) => ({ role_name, module, enabled: true })));
-      const ok = await run(e.target, async () => {
-        const { error } = await sb.from("role_modules").upsert(defaults, { onConflict: "role_name,module" });
-        if (error) throw new Error(error.message);
-      }, "Default permissions loaded.");
-      if (ok) show("Role Permissions");
-    }, "primary");
-    root.append(panel("No permissions saved yet", "Start from each role's current menu, then adjust.", seed));
-    return;
-  }
-
-  const head = ["Module", ...ROLES.map(roleLabel)];
-  const body = modules.map((module) => [module, ...ROLES.map((role) => {
-    const locked = role === "admin" && PROTECTED_ADMIN_MODULES.includes(module);
-    const box = h("input", { type: "checkbox", disabled: locked, "aria-label": `${roleLabel(role)}: ${module}`, title: locked ? "Administrators always keep this" : null });
-    box.checked = locked || state.get(`${role}|${module}`) === true;
-    box.addEventListener("change", async () => {
-      box.disabled = true;
-      const { error } = await sb.from("role_modules").upsert({ role_name: role, module, enabled: box.checked }, { onConflict: "role_name,module" });
-      box.disabled = false;
-      if (error) { box.checked = !box.checked; return notify(`Unable to save: ${error.message}`, "error"); }
-      notify(`${roleLabel(role)}: ${module} ${box.checked ? "enabled" : "disabled"}.`);
-    });
-    return box;
-  })]);
-  root.append(panel("Role permissions", "Tick the modules each role may open. Changes save immediately and are logged.",
-    table(head, body, "No modules defined.", "adm-matrix"),
-    h("p", { class: "adm-muted", text: "Administrators always keep User Management, Role Permissions and System Settings. The staff dashboard applies these settings when it reads the role_modules table." })));
 }
 
 /* ---------------------------------------------------------- room categories */
@@ -529,7 +488,6 @@ async function renderReports(root) {
 /* --------------------------------------------------------------- navigation */
 const RENDERERS = {
   "User Management": renderUsers,
-  "Role Permissions": renderPermissions,
   "Room Categories": renderRoomCategories,
   "System Settings": renderSettings,
   "Activity Logs": renderActivity,
